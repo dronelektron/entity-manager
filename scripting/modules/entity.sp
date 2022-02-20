@@ -1,8 +1,13 @@
-void Entity_FreezeAll() {
+void Entity_ApplyActions() {
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int entity = EntityList_Get(entityIndex);
+        int entity = EntityList_GetId(entityIndex);
+        int action = EntityList_GetAction(entityIndex);
 
-        Entity_Freeze(entity);
+        switch (action) {
+            case ENTITY_ACTION_FREEZE: {
+                Entity_Freeze(entity);
+            }
+        }
     }
 }
 

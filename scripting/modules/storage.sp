@@ -21,16 +21,16 @@ void Storage_SaveEntities(KeyValues kv) {
         kv.JumpToKey(g_mapName, true);
     }
 
-    char entityNumber[STORAGE_ENTITY_ID_MAX_LENGTH];
+    char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
 
-    for (int i = 0; i < entitiesAmount; i++) {
-        IntToString(i + 1, entityNumber, sizeof(entityNumber));
+    for (int entityIndex = 0; entityIndex < entitiesAmount; entityIndex++) {
+        int entity = EntityList_GetId(entityIndex);
+        int action = EntityList_GetAction(entityIndex);
 
-        kv.JumpToKey(entityNumber, true);
+        IntToString(entity, entityId, sizeof(entityId));
 
-        int entity = EntityList_Get(i);
-
-        kv.SetNum(STORAGE_KEY_ENTITY, entity);
+        kv.JumpToKey(entityId, true);
+        kv.SetNum(STORAGE_KEY_ACTION, action);
         kv.GoBack();
     }
 
@@ -45,10 +45,15 @@ void Storage_LoadEntities(KeyValues kv) {
         return;
     }
 
-    do {
-        int entity = kv.GetNum(STORAGE_KEY_ENTITY);
+    char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
 
-        EntityList_Add(entity);
+    do {
+        kv.GetSectionName(entityId, sizeof(entityId));
+
+        int entity = StringToInt(entityId);
+        int action = kv.GetNum(STORAGE_KEY_ACTION);
+
+        EntityList_Add(entity, action);
     } while (kv.GotoNextKey());
 }
 

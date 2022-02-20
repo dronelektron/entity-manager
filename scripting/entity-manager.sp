@@ -44,7 +44,7 @@ public void OnMapStart() {
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
-    Entity_FreezeAll();
+    Entity_ApplyActions();
 
     return Plugin_Continue;
 }

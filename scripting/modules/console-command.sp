@@ -14,7 +14,7 @@ public Action Command_Freeze(int client, int args) {
     }
 
     Entity_Freeze(entity);
-    EntityList_Add(entity);
+    EntityList_Add(entity, ENTITY_ACTION_FREEZE);
     Message_ReplyEntityFrozen(client, entity);
     LogMessage("\"%L\" froze entity %d", client, entity);
 
