@@ -1,0 +1,37 @@
+"Phrases"
+{
+    "Entity not found"
+    {
+        "en"    "Entity not found"
+    }
+
+    "Entity has been frozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has been frozen"
+    }
+
+    "Entity is already frozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} is already frozen"
+    }
+
+    "Entity has been unfrozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has been unfrozen"
+    }
+
+    "Entity is already unfrozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} is already unfrozen"
+    }
+
+    "Entities saved"
+    {
+        "#format"   "{1:d}"
+        "en"    "Saved {1} entities"
+    }
+}

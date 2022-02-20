@@ -1,0 +1,32 @@
+"Phrases"
+{
+    "Entity not found"
+    {
+        "ru"    "Объект не найден"
+    }
+
+    "Entity has been frozen"
+    {
+        "ru"    "Объект {1} заморожен"
+    }
+
+    "Entity is already frozen"
+    {
+        "ru"    "Объект {1} уже заморожен"
+    }
+
+    "Entity has been unfrozen"
+    {
+        "ru"    "Объект {1} разморожен"
+    }
+
+    "Entity is already unfrozen"
+    {
+        "ru"    "Объект {1} уже разморожен"
+    }
+
+    "Entities saved"
+    {
+        "ru"    "Сохранено {1} объектов"
+    }
+}
