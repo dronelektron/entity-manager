@@ -5,16 +5,22 @@
         "en"    "Entity not found"
     }
 
+    "Entity already has an action"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} already has an action"
+    }
+
+    "Entity has no actions"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has no actions"
+    }
+
     "Entity has been frozen"
     {
         "#format"   "{1:d}"
         "en"    "Entity {1} has been frozen"
-    }
-
-    "Entity is already frozen"
-    {
-        "#format"   "{1:d}"
-        "en"    "Entity {1} is already frozen"
     }
 
     "Entity has been unfrozen"
@@ -23,10 +29,16 @@
         "en"    "Entity {1} has been unfrozen"
     }
 
-    "Entity is already unfrozen"
+    "Entity deleted"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} is already unfrozen"
+        "en"    "Entity {1} deleted"
+    }
+
+    "Entity restored"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} restored"
     }
 
     "Entities saved"

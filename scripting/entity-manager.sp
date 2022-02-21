@@ -10,6 +10,7 @@
 #include "em/storage"
 
 #include "modules/console-command.sp"
+#include "modules/console-variable.sp"
 #include "modules/entity-list.sp"
 #include "modules/entity.sp"
 #include "modules/message.sp"
@@ -26,12 +27,11 @@ public Plugin myinfo = {
 public void OnPluginStart() {
     Storage_BuildConfigPath();
     EntityList_Create();
-
-    RegAdminCmd("sm_entitymanager_freeze", Command_Freeze, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_unfreeze", Command_Unfreeze, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_save", Command_Save, ADMFLAG_GENERIC);
+    Command_Create();
+    Variable_Create();
     HookEvent("dod_round_start", Event_RoundStart);
     LoadTranslations("entity-manager.phrases");
+    AutoExecConfig(true, "entity-manager");
 }
 
 public void OnPluginEnd() {
