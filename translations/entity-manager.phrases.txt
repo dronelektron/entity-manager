@@ -1,0 +1,49 @@
+"Phrases"
+{
+    "Entity not found"
+    {
+        "en"    "Entity not found"
+    }
+
+    "Entity already has an action"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} already has an action"
+    }
+
+    "Entity has no actions"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has no actions"
+    }
+
+    "Entity has been frozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has been frozen"
+    }
+
+    "Entity has been unfrozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} has been unfrozen"
+    }
+
+    "Entity deleted"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} deleted"
+    }
+
+    "Entity restored"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} restored"
+    }
+
+    "Entities saved"
+    {
+        "#format"   "{1:d}"
+        "en"    "Saved {1} entities"
+    }
+}
