@@ -6,8 +6,12 @@ void Message_ReplyEntityAlreadyHasAction(int client, int entity) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity already has an action", entity);
 }
 
-void Message_ReplyEntityHasNoActions(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity has no actions", entity);
+void Message_ReplyEntityNotFrozen(int client, int entity) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity not frozen", entity);
+}
+
+void Message_ReplyEntityNotDeleted(int client, int entity) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity not deleted", entity);
 }
 
 void Message_ReplyEntityFrozen(int client, int entity) {

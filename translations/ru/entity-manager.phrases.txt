@@ -10,9 +10,14 @@
         "ru"    "У объекта {1} уже есть действие"
     }
 
-    "Entity has no actions"
+    "Entity not frozen"
     {
-        "ru"    "У объекта {1} нет действий"
+        "ru"    "Объект {1} не заморожен"
+    }
+
+    "Entity not deleted"
+    {
+        "ru"    "Объект {1} не удален"
     }
 
     "Entity has been frozen"

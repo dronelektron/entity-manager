@@ -23,8 +23,8 @@ UseCaseResult UseCase_UnfreezeEntity(int client, int& entity) {
         return UseCaseResult_EntityNotFound;
     }
 
-    if (!EntityList_Contains(entity)) {
-        return UseCaseResult_HasNoActions;
+    if (!EntityList_IsFrozen(entity)) {
+        return UseCaseResult_NotFrozen;
     }
 
     Entity_Unfreeze(entity);
@@ -59,8 +59,8 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
         return UseCaseResult_EntityNotFound;
     }
 
-    if (!EntityList_Contains(entity)) {
-        return UseCaseResult_HasNoActions;
+    if (!EntityList_IsDeleted(entity)) {
+        return UseCaseResult_NotDeleted;
     }
 
     EntityList_Remove(entity);

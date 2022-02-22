@@ -32,6 +32,14 @@ bool EntityList_Contains(int entity) {
     return EntityList_Find(entity) != ENTITY_NOT_FOUND;
 }
 
+bool EntityList_IsFrozen(int entity) {
+    return EntityList_CheckAction(entity, ENTITY_ACTION_FREEZE);
+}
+
+bool EntityList_IsDeleted(int entity) {
+    return EntityList_CheckAction(entity, ENTITY_ACTION_DELETE);
+}
+
 void EntityList_Add(int entity, int action) {
     g_entities.Push(entity);
     g_entities.Push(action);
@@ -62,4 +70,14 @@ int EntityList_Find(int entity) {
 
 int EntityList_GetOffset(int index) {
     return index * ENTITY_FIELDS_AMOUNT;
+}
+
+bool EntityList_CheckAction(int entity, int action) {
+    int index = EntityList_Find(entity);
+
+    if (index == ENTITY_NOT_FOUND) {
+        return false;
+    }
+
+    return EntityList_GetAction(index) == action;
 }

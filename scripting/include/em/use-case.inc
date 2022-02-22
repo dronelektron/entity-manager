@@ -7,5 +7,6 @@ enum UseCaseResult {
     UseCaseResult_Success,
     UseCaseResult_EntityNotFound,
     UseCaseResult_AlreadyHasAction,
-    UseCaseResult_HasNoActions
+    UseCaseResult_NotFrozen,
+    UseCaseResult_NotDeleted
 };
