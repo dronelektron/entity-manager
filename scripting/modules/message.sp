@@ -6,8 +6,12 @@ void Message_ReplyEntityAlreadyHasAction(int client, int entity) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity already has an action", entity);
 }
 
-void Message_ReplyEntityHasNoActions(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity has no actions", entity);
+void Message_ReplyEntityNotFrozen(int client, int entity) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity not frozen", entity);
+}
+
+void Message_ReplyEntityNotDeleted(int client, int entity) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity not deleted", entity);
 }
 
 void Message_ReplyEntityFrozen(int client, int entity) {
@@ -24,6 +28,10 @@ void Message_ReplyEntityDeleted(int client, int entity) {
 
 void Message_ReplyEntityRestored(int client, int entity) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity restored", entity);
+}
+
+void Message_ReplyListOfEntitiesCleared(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "List of entities cleared");
 }
 
 void Message_ReplyEntitiesSaved(int client, int entitiesCount) {
@@ -46,6 +54,18 @@ void Message_LogEntityRestored(int client, int entity) {
     LogMessage("\"%L\" restored entity %d", client, entity);
 }
 
+void Message_LogListOfEntitiesCleared(int client) {
+    LogMessage("\"%L\" cleared the list of entities", client);
+}
+
 void Message_LogEntitiesSaved(int client, int entitiesAmount) {
     LogMessage("\"%L\" saved %d entities", client, entitiesAmount);
+}
+
+void Message_LogNoEntities() {
+    LogMessage("No entities for this map");
+}
+
+void Message_LogEntitiesLoaded(int entitiesAmount) {
+    LogMessage("Loaded %d entities", entitiesAmount);
 }

@@ -11,10 +11,16 @@
         "en"    "Entity {1} already has an action"
     }
 
-    "Entity has no actions"
+    "Entity not frozen"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} has no actions"
+        "en"    "Entity {1} not frozen"
+    }
+
+    "Entity not deleted"
+    {
+        "#format"   "{1:d}"
+        "en"    "Entity {1} not deleted"
     }
 
     "Entity has been frozen"
@@ -39,6 +45,11 @@
     {
         "#format"   "{1:d}"
         "en"    "Entity {1} restored"
+    }
+
+    "List of entities cleared"
+    {
+        "en"    "List of entities cleared"
     }
 
     "Entities saved"

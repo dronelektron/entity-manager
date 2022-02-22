@@ -1,24 +1,3 @@
-void Entity_ApplyActions() {
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int entity = EntityList_GetId(entityIndex);
-        int action = EntityList_GetAction(entityIndex);
-
-        switch (action) {
-            case ENTITY_ACTION_FREEZE: {
-                if (Variable_IsFreezeAllowed()) {
-                    Entity_Freeze(entity);
-                }
-            }
-
-            case ENTITY_ACTION_DELETE: {
-                if (Variable_IsDeletionAllowed()) {
-                    Entity_Hide(entity);
-                }
-            }
-        }
-    }
-}
-
 void Entity_Freeze(int entity) {
     AcceptEntityInput(entity, "DisableMotion");
 }

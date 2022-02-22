@@ -7,102 +7,99 @@ void Command_Create() {
 }
 
 public Action Command_Freeze(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_FreezeEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+    switch (result) {
+        case UseCaseResult_Success: {
+            Message_ReplyEntityFrozen(client, entity);
+        }
 
-        return Plugin_Handled;
+        case UseCaseResult_EntityNotFound: {
+            Message_ReplyEntityNotFound(client);
+        }
+
+        case UseCaseResult_AlreadyHasAction: {
+            Message_ReplyEntityAlreadyHasAction(client, entity);
+        }
     }
-
-    if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    Entity_Freeze(entity);
-    EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_ReplyEntityFrozen(client, entity);
-    Message_LogFrozeEntity(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Unfreeze(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_UnfreezeEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+    switch (result) {
+        case UseCaseResult_Success: {
+            Message_ReplyEntityUnfrozen(client, entity);
+        }
 
-        return Plugin_Handled;
+        case UseCaseResult_EntityNotFound: {
+            Message_ReplyEntityNotFound(client);
+        }
+
+        case UseCaseResult_NotFrozen: {
+            Message_ReplyEntityNotFrozen(client, entity);
+        }
     }
-
-    if (!EntityList_Contains(entity)) {
-        Message_ReplyEntityHasNoActions(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    Entity_Unfreeze(entity);
-    EntityList_Remove(entity);
-    Message_ReplyEntityUnfrozen(client, entity);
-    Message_LogUnfrozeEntity(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Delete(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_DeleteEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+    switch (result) {
+        case UseCaseResult_Success: {
+            Message_ReplyEntityDeleted(client, entity);
+        }
 
-        return Plugin_Handled;
+        case UseCaseResult_EntityNotFound: {
+            Message_ReplyEntityNotFound(client);
+        }
+
+        case UseCaseResult_AlreadyHasAction: {
+            Message_ReplyEntityAlreadyHasAction(client, entity);
+        }
     }
-
-    if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    RemoveEntity(entity);
-    EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_ReplyEntityDeleted(client, entity);
-    Message_LogEntityDeleted(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Restore(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_RestoreEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+    switch (result) {
+        case UseCaseResult_Success: {
+            Message_ReplyEntityRestored(client, entity);
+        }
 
-        return Plugin_Handled;
+        case UseCaseResult_EntityNotFound: {
+            Message_ReplyEntityNotFound(client);
+        }
+
+        case UseCaseResult_NotDeleted: {
+            Message_ReplyEntityNotDeleted(client, entity);
+        }
     }
-
-    if (!EntityList_Contains(entity)) {
-        Message_ReplyEntityHasNoActions(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    EntityList_Remove(entity);
-    Message_ReplyEntityRestored(client, entity);
-    Message_LogEntityRestored(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Save(int client, int args) {
-    int entitiesAmount = EntityList_Size();
+    int entitiesAmount;
 
-    Storage_Apply(Storage_SaveEntities);
-    Message_ReplyEntitiesSaved(client, entitiesAmount);
-    Message_LogEntitiesSaved(client, entitiesAmount);
+    UseCase_SaveEntities(client, entitiesAmount);
+
+    if (entitiesAmount == 0) {
+        Message_ReplyListOfEntitiesCleared(client);
+    } else {
+        Message_ReplyEntitiesSaved(client, entitiesAmount);
+    }
 
     return Plugin_Handled;
 }

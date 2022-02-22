@@ -8,6 +8,7 @@
 #include "em/entity"
 #include "em/message"
 #include "em/storage"
+#include "em/use-case"
 
 #include "modules/console-command.sp"
 #include "modules/console-variable.sp"
@@ -15,12 +16,13 @@
 #include "modules/entity.sp"
 #include "modules/message.sp"
 #include "modules/storage.sp"
+#include "modules/use-case.sp"
 
 public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "0.1.0",
+    version = "0.1.1",
     url = ""
 };
 
@@ -39,12 +41,9 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    Storage_SaveCurrentMapName();
-    Storage_Apply(Storage_LoadEntities);
+    UseCase_LoadEntities();
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
-    Entity_ApplyActions();
-
-    return Plugin_Continue;
+public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+    UseCase_ApplyActionToEntities();
 }
