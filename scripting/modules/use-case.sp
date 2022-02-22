@@ -45,7 +45,7 @@ UseCaseResult UseCase_DeleteEntity(int client, int& entity) {
         return UseCaseResult_AlreadyHasAction;
     }
 
-    RemoveEntity(entity);
+    Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
     Message_LogEntityDeleted(client, entity);
 
@@ -63,6 +63,7 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
         return UseCaseResult_NotDeleted;
     }
 
+    Entity_Restore(entity);
     EntityList_Remove(entity);
     Message_LogEntityRestored(client, entity);
 
@@ -108,7 +109,7 @@ void UseCase_ApplyActionToEntities() {
 
             case ENTITY_ACTION_DELETE: {
                 if (Variable_IsDeletionAllowed()) {
-                    Entity_Hide(entity);
+                    Entity_Delete(entity);
                 }
             }
         }
