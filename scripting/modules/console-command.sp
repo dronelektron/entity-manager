@@ -7,102 +7,78 @@ void Command_Create() {
 }
 
 public Action Command_Freeze(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_FreezeEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
-
-        return Plugin_Handled;
+    if (result == UseCaseResult_Success) {
+        Message_ReplyEntityFrozen(client, entity);
+    } else {
+        DefaultMessageHandler(result, client, entity);
     }
-
-    if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    Entity_Freeze(entity);
-    EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_ReplyEntityFrozen(client, entity);
-    Message_LogFrozeEntity(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Unfreeze(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_UnfreezeEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
-
-        return Plugin_Handled;
+    if (result == UseCaseResult_Success) {
+        Message_ReplyEntityUnfrozen(client, entity);
+    } else {
+        DefaultMessageHandler(result, client, entity);
     }
-
-    if (!EntityList_Contains(entity)) {
-        Message_ReplyEntityHasNoActions(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    Entity_Unfreeze(entity);
-    EntityList_Remove(entity);
-    Message_ReplyEntityUnfrozen(client, entity);
-    Message_LogUnfrozeEntity(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Delete(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_DeleteEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
-
-        return Plugin_Handled;
+    if (result == UseCaseResult_Success) {
+        Message_ReplyEntityDeleted(client, entity);
+    } else {
+        DefaultMessageHandler(result, client, entity);
     }
-
-    if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    RemoveEntity(entity);
-    EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_ReplyEntityDeleted(client, entity);
-    Message_LogEntityDeleted(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Restore(int client, int args) {
-    int entity = Entity_Trace(client);
+    int entity;
+    UseCaseResult result = UseCase_RestoreEntity(client, entity);
 
-    if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
-
-        return Plugin_Handled;
+    if (result == UseCaseResult_Success) {
+        Message_ReplyEntityRestored(client, entity);
+    } else {
+        DefaultMessageHandler(result, client, entity);
     }
-
-    if (!EntityList_Contains(entity)) {
-        Message_ReplyEntityHasNoActions(client, entity);
-
-        return Plugin_Handled;
-    }
-
-    EntityList_Remove(entity);
-    Message_ReplyEntityRestored(client, entity);
-    Message_LogEntityRestored(client, entity);
 
     return Plugin_Handled;
 }
 
 public Action Command_Save(int client, int args) {
-    int entitiesAmount = EntityList_Size();
+    int entitiesAmount;
 
-    Storage_Apply(Storage_SaveEntities);
+    UseCase_SaveEntities(client, entitiesAmount);
     Message_ReplyEntitiesSaved(client, entitiesAmount);
-    Message_LogEntitiesSaved(client, entitiesAmount);
 
     return Plugin_Handled;
+}
+
+void DefaultMessageHandler(UseCaseResult result, int client, int entity) {
+    switch (result) {
+        case UseCaseResult_EntityNotFound: {
+            Message_ReplyEntityNotFound(client);
+        }
+
+        case UseCaseResult_AlreadyHasAction: {
+            Message_ReplyEntityAlreadyHasAction(client, entity);
+        }
+
+        case UseCaseResult_HasNoActions: {
+            Message_ReplyEntityHasNoActions(client, entity);
+        }
+    }
 }

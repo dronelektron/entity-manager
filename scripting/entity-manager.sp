@@ -8,6 +8,7 @@
 #include "em/entity"
 #include "em/message"
 #include "em/storage"
+#include "em/use-case"
 
 #include "modules/console-command.sp"
 #include "modules/console-variable.sp"
@@ -15,6 +16,7 @@
 #include "modules/entity.sp"
 #include "modules/message.sp"
 #include "modules/storage.sp"
+#include "modules/use-case.sp"
 
 public Plugin myinfo = {
     name = "Entity manager",
@@ -39,24 +41,9 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    LoadEntities();
+    UseCase_LoadEntities();
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
-    Entity_ApplyActions();
-
-    return Plugin_Continue;
-}
-
-void LoadEntities() {
-    Storage_SaveCurrentMapName();
-    Storage_Apply(Storage_LoadEntities);
-
-    int entitiesAmount = EntityList_Size();
-
-    if (entitiesAmount == 0) {
-        Message_LogNoEntities();
-    } else {
-        Message_LogEntitiesLoaded(entitiesAmount);
-    }
+public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+    UseCase_ApplyActionToEntities();
 }
