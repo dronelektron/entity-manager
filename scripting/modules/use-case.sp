@@ -63,6 +63,7 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
         return UseCaseResult_NotDeleted;
     }
 
+    Entity_Restore(entity);
     EntityList_Remove(entity);
     Message_LogEntityRestored(client, entity);
 

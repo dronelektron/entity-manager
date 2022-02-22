@@ -11,6 +11,11 @@ void Entity_Delete(int entity) {
     Entity_Hide(entity);
 }
 
+void Entity_Restore(int entity) {
+    Entity_Show(entity);
+    Entity_Unfreeze(entity);
+}
+
 void Entity_Hide(int entity) {
     int effects = GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
 
@@ -18,6 +23,15 @@ void Entity_Hide(int entity) {
 
     SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
     SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, SOLID_TYPE_NONE);
+}
+
+void Entity_Show(int entity) {
+    int effects = GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
+
+    effects &= ~EFFECT_FLAG_NO_DRAW;
+
+    SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
+    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, SOLID_TYPE_VPHYSICS);
 }
 
 int Entity_Trace(int client) {
