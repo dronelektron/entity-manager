@@ -6,13 +6,18 @@ void Entity_Unfreeze(int entity) {
     AcceptEntityInput(entity, "EnableMotion");
 }
 
+void Entity_Delete(int entity) {
+    Entity_Freeze(entity);
+    Entity_Hide(entity);
+}
+
 void Entity_Hide(int entity) {
     int effects = GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
 
     effects |= EFFECT_FLAG_NO_DRAW;
 
     SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
-    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_FLAGS, SOLID_FLAG_NO);
+    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, SOLID_TYPE_NONE);
 }
 
 int Entity_Trace(int client) {
