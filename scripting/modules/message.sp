@@ -49,3 +49,11 @@ void Message_LogEntityRestored(int client, int entity) {
 void Message_LogEntitiesSaved(int client, int entitiesAmount) {
     LogMessage("\"%L\" saved %d entities", client, entitiesAmount);
 }
+
+void Message_LogNoEntities() {
+    LogMessage("No entities for this map");
+}
+
+void Message_LogEntitiesLoaded(int entitiesAmount) {
+    LogMessage("Loaded %d entities", entitiesAmount);
+}

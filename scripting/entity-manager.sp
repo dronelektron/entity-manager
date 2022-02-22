@@ -39,12 +39,24 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    Storage_SaveCurrentMapName();
-    Storage_Apply(Storage_LoadEntities);
+    LoadEntities();
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
     Entity_ApplyActions();
 
     return Plugin_Continue;
+}
+
+void LoadEntities() {
+    Storage_SaveCurrentMapName();
+    Storage_Apply(Storage_LoadEntities);
+
+    int entitiesAmount = EntityList_Size();
+
+    if (entitiesAmount == 0) {
+        Message_LogNoEntities();
+    } else {
+        Message_LogEntitiesLoaded(entitiesAmount);
+    }
 }
