@@ -24,7 +24,7 @@ Allows you to perform various actions with objects at the beginning of the round
 * sm_entitymanager_freeze - Freeze the entity you are looking at
 * sm_entitymanager_unfreeze - Unfreeze the entity you are looking at
 * sm_entitymanager_delete - Delete entity
-* sm_entitymanager_restore - Restore entity (i.e. do not delete)
+* sm_entitymanager_restore - Restore entity
 * sm_entitymanager_save - Save entities to file
 
 ### Notes
