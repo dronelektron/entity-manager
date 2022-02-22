@@ -62,7 +62,12 @@ public Action Command_Save(int client, int args) {
     int entitiesAmount;
 
     UseCase_SaveEntities(client, entitiesAmount);
-    Message_ReplyEntitiesSaved(client, entitiesAmount);
+
+    if (entitiesAmount == 0) {
+        Message_ReplyListOfEntitiesCleared(client);
+    } else {
+        Message_ReplyEntitiesSaved(client, entitiesAmount);
+    }
 
     return Plugin_Handled;
 }

@@ -70,10 +70,15 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
 }
 
 void UseCase_SaveEntities(int client, int& entitiesAmount) {
+    Storage_Apply(Storage_SaveEntities);
+
     entitiesAmount = EntityList_Size();
 
-    Storage_Apply(Storage_SaveEntities);
-    Message_LogEntitiesSaved(client, entitiesAmount);
+    if (entitiesAmount == 0) {
+        Message_LogListOfEntitiesCleared(client);
+    } else {
+        Message_LogEntitiesSaved(client, entitiesAmount);
+    }
 }
 
 void UseCase_LoadEntities() {

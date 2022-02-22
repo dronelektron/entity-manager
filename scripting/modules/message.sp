@@ -26,6 +26,10 @@ void Message_ReplyEntityRestored(int client, int entity) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity restored", entity);
 }
 
+void Message_ReplyListOfEntitiesCleared(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "List of entities cleared");
+}
+
 void Message_ReplyEntitiesSaved(int client, int entitiesCount) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entities saved", entitiesCount);
 }
@@ -44,6 +48,10 @@ void Message_LogEntityDeleted(int client, int entity) {
 
 void Message_LogEntityRestored(int client, int entity) {
     LogMessage("\"%L\" restored entity %d", client, entity);
+}
+
+void Message_LogListOfEntitiesCleared(int client) {
+    LogMessage("\"%L\" cleared the list of entities", client);
 }
 
 void Message_LogEntitiesSaved(int client, int entitiesAmount) {

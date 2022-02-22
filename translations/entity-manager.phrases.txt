@@ -41,6 +41,11 @@
         "en"    "Entity {1} restored"
     }
 
+    "List of entities cleared"
+    {
+        "en"    "List of entities cleared"
+    }
+
     "Entities saved"
     {
         "#format"   "{1:d}"
