@@ -68,4 +68,39 @@
         "#format"   "{1:d}"
         "en"    "Loaded {1} entities"
     }
+
+    "Entity management"
+    {
+        "en"    "Entity management"
+    }
+
+    "Freeze entity"
+    {
+        "en"    "Freeze entity"
+    }
+
+    "Unfreeze entity"
+    {
+        "en"    "Unfreeze entity"
+    }
+
+    "Delete entity"
+    {
+        "en"    "Delete entity"
+    }
+
+    "Restore entity"
+    {
+        "en"    "Restore entity"
+    }
+
+    "Save entities"
+    {
+        "en"    "Save entities"
+    }
+
+    "Load entities"
+    {
+        "en"    "Load entities"
+    }
 }

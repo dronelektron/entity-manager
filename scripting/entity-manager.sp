@@ -6,6 +6,7 @@
 
 #include "em/entity-list"
 #include "em/entity"
+#include "em/menu"
 #include "em/message"
 #include "em/storage"
 #include "em/use-case"
@@ -14,6 +15,7 @@
 #include "modules/console-variable.sp"
 #include "modules/entity-list.sp"
 #include "modules/entity.sp"
+#include "modules/menu.sp"
 #include "modules/message.sp"
 #include "modules/storage.sp"
 #include "modules/use-case.sp"
