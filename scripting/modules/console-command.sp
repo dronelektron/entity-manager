@@ -19,11 +19,11 @@ public Action Command_Freeze(int client, int args) {
     UseCaseResult result = UseCase_FreezeEntity(client, entity);
 
     if (result == UseCaseResult_Success) {
-        Message_ReplyEntityFrozen(client, entity);
+        Message_EntityFrozen(client, entity);
     } else if (result == UseCaseResult_EntityNotFound) {
-        Message_ReplyEntityNotFound(client);
+        Message_EntityNotFound(client);
     } else if (result == UseCaseResult_AlreadyHasAction) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
+        Message_EntityAlreadyHasAction(client, entity);
     }
 
     return Plugin_Handled;
@@ -34,11 +34,11 @@ public Action Command_Unfreeze(int client, int args) {
     UseCaseResult result = UseCase_UnfreezeEntity(client, entity);
 
     if (result == UseCaseResult_Success) {
-        Message_ReplyEntityUnfrozen(client, entity);
+        Message_EntityUnfrozen(client, entity);
     } else if (result == UseCaseResult_EntityNotFound) {
-        Message_ReplyEntityNotFound(client);
+        Message_EntityNotFound(client);
     } else if (result == UseCaseResult_NotFrozen) {
-        Message_ReplyEntityNotFrozen(client, entity);
+        Message_EntityNotFrozen(client, entity);
     }
 
     return Plugin_Handled;
@@ -49,11 +49,11 @@ public Action Command_Delete(int client, int args) {
     UseCaseResult result = UseCase_DeleteEntity(client, entity);
 
     if (result == UseCaseResult_Success) {
-        Message_ReplyEntityDeleted(client, entity);
+        Message_EntityDeleted(client, entity);
     } else if (result == UseCaseResult_EntityNotFound) {
-        Message_ReplyEntityNotFound(client);
+        Message_EntityNotFound(client);
     } else if (result == UseCaseResult_AlreadyHasAction) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
+        Message_EntityAlreadyHasAction(client, entity);
     }
 
     return Plugin_Handled;
@@ -64,11 +64,11 @@ public Action Command_Restore(int client, int args) {
     UseCaseResult result = UseCase_RestoreEntity(client, entity);
 
     if (result == UseCaseResult_Success) {
-        Message_ReplyEntityRestored(client, entity);
+        Message_EntityRestored(client, entity);
     } else if (result == UseCaseResult_EntityNotFound) {
-        Message_ReplyEntityNotFound(client);
+        Message_EntityNotFound(client);
     } else if (result == UseCaseResult_NotDeleted) {
-        Message_ReplyEntityNotDeleted(client, entity);
+        Message_EntityNotDeleted(client, entity);
     }
 
     return Plugin_Handled;
@@ -80,9 +80,9 @@ public Action Command_Save(int client, int args) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ReplyListOfEntitiesCleared(client);
+        Message_ListOfEntitiesCleared(client);
     } else {
-        Message_ReplyEntitiesSaved(client, entitiesAmount);
+        Message_EntitiesSaved(client, entitiesAmount);
     }
 
     return Plugin_Handled;
@@ -94,9 +94,9 @@ public Action Command_Load(int client, int args) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ReplyNoEntitiesForLoading(client);
+        Message_NoEntitiesForLoading(client);
     } else {
-        Message_ReplyEntitiesLoaded(client, entitiesAmount);
+        Message_EntitiesLoaded(client, entitiesAmount);
     }
 
     return Plugin_Handled;
