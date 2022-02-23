@@ -100,18 +100,10 @@ void UseCase_ApplyActionToEntities() {
         int entity = EntityList_GetId(entityIndex);
         int action = EntityList_GetAction(entityIndex);
 
-        switch (action) {
-            case ENTITY_ACTION_FREEZE: {
-                if (Variable_IsFreezeAllowed()) {
-                    Entity_Freeze(entity);
-                }
-            }
-
-            case ENTITY_ACTION_DELETE: {
-                if (Variable_IsDeletionAllowed()) {
-                    Entity_Delete(entity);
-                }
-            }
+        if (action == ENTITY_ACTION_FREEZE && Variable_IsFreezeAllowed()) {
+            Entity_Freeze(entity);
+        } else if (action == ENTITY_ACTION_DELETE && Variable_IsDeletionAllowed()) {
+            Entity_Delete(entity);
         }
     }
 }
