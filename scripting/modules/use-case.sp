@@ -11,7 +11,7 @@ UseCaseResult UseCase_FreezeEntity(int client, int& entity) {
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_LogFrozeEntity(client, entity);
+    Message_EntityFrozen(client, entity, MessageType_Log);
 
     return UseCaseResult_Success;
 }
@@ -29,7 +29,7 @@ UseCaseResult UseCase_UnfreezeEntity(int client, int& entity) {
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
-    Message_LogUnfrozeEntity(client, entity);
+    Message_EntityUnfrozen(client, entity, MessageType_Log);
 
     return UseCaseResult_Success;
 }
@@ -47,7 +47,7 @@ UseCaseResult UseCase_DeleteEntity(int client, int& entity) {
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_LogEntityDeleted(client, entity);
+    Message_EntityDeleted(client, entity, MessageType_Log);
 
     return UseCaseResult_Success;
 }
@@ -65,33 +65,33 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
-    Message_LogEntityRestored(client, entity);
+    Message_EntityRestored(client, entity, MessageType_Log);
 
     return UseCaseResult_Success;
 }
 
-void UseCase_SaveEntities(int client, int& entitiesAmount) {
+void UseCase_SaveEntities(int client) {
     Storage_Apply(Storage_SaveEntities);
 
-    entitiesAmount = EntityList_Size();
+    int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_LogListOfEntitiesCleared(client);
+        Message_ListOfEntitiesCleared(client, MessageType_Log);
     } else {
-        Message_LogEntitiesSaved(client, entitiesAmount);
+        Message_EntitiesSaved(client, entitiesAmount, MessageType_Log);
     }
 }
 
-void UseCase_LoadEntities() {
+void UseCase_LoadEntities(int client) {
     Storage_SaveCurrentMapName();
     Storage_Apply(Storage_LoadEntities);
 
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_LogNoEntities();
+        Message_NoEntitiesForLoading(client, MessageType_Log);
     } else {
-        Message_LogEntitiesLoaded(entitiesAmount);
+        Message_EntitiesLoaded(client, entitiesAmount, MessageType_Log);
     }
 }
 
@@ -100,18 +100,10 @@ void UseCase_ApplyActionToEntities() {
         int entity = EntityList_GetId(entityIndex);
         int action = EntityList_GetAction(entityIndex);
 
-        switch (action) {
-            case ENTITY_ACTION_FREEZE: {
-                if (Variable_IsFreezeAllowed()) {
-                    Entity_Freeze(entity);
-                }
-            }
-
-            case ENTITY_ACTION_DELETE: {
-                if (Variable_IsDeletionAllowed()) {
-                    Entity_Delete(entity);
-                }
-            }
+        if (action == ENTITY_ACTION_FREEZE && Variable_IsFreezeAllowed()) {
+            Entity_Freeze(entity);
+        } else if (action == ENTITY_ACTION_DELETE && Variable_IsDeletionAllowed()) {
+            Entity_Delete(entity);
         }
     }
 }

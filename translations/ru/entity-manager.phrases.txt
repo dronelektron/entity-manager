@@ -49,4 +49,49 @@
     {
         "ru"    "Сохранено {1} объектов"
     }
+
+    "No entities for loading"
+    {
+        "ru"    "Нет объектов для загрузки"
+    }
+
+    "Entities loaded"
+    {
+        "ru"    "Загружено {1} объектов"
+    }
+
+    "Entity management"
+    {
+        "ru"    "Управление объектами"
+    }
+
+    "Freeze entity"
+    {
+        "ru"    "Заморозить объект"
+    }
+
+    "Unfreeze entity"
+    {
+        "ru"    "Разморозить объект"
+    }
+
+    "Delete entity"
+    {
+        "ru"    "Удалить объект"
+    }
+
+    "Restore entity"
+    {
+        "ru"    "Восстановить объект"
+    }
+
+    "Save entities"
+    {
+        "ru"    "Сохранить объекты"
+    }
+
+    "Load entities"
+    {
+        "ru"    "Загрузить объекты"
+    }
 }

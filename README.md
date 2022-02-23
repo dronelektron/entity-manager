@@ -2,8 +2,8 @@
 
 Allows you to perform various actions with objects at the beginning of the round:
 
-* Delete
 * Freeze
+* Delete
 
 ### Supported Games
 
@@ -16,16 +16,18 @@ Allows you to perform various actions with objects at the beginning of the round
 
 ### Console Variables
 
-* sm_entitymanager_allow_freeze - Freeze (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
+* sm_entitymanager_allow_freezing - Freeze (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
 * sm_entitymanager_allow_deletion - Delete (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
 
 ### Console Commands
 
+* sm_entitymanager - Open menu
 * sm_entitymanager_freeze - Freeze the entity you are looking at
 * sm_entitymanager_unfreeze - Unfreeze the entity you are looking at
 * sm_entitymanager_delete - Delete entity
 * sm_entitymanager_restore - Restore entity
 * sm_entitymanager_save - Save entities to file
+* sm_entitymanager_load - Load entities from file
 
 ### Notes
 

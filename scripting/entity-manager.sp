@@ -6,6 +6,7 @@
 
 #include "em/entity-list"
 #include "em/entity"
+#include "em/menu"
 #include "em/message"
 #include "em/storage"
 #include "em/use-case"
@@ -14,6 +15,7 @@
 #include "modules/console-variable.sp"
 #include "modules/entity-list.sp"
 #include "modules/entity.sp"
+#include "modules/menu.sp"
 #include "modules/message.sp"
 #include "modules/storage.sp"
 #include "modules/use-case.sp"
@@ -22,7 +24,7 @@ public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "0.1.2",
+    version = "0.2.0",
     url = ""
 };
 
@@ -41,7 +43,7 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    UseCase_LoadEntities();
+    UseCase_LoadEntities(CONSOLE);
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
