@@ -41,7 +41,7 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    UseCase_LoadEntities();
+    UseCase_LoadEntities(CONSOLE);
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {

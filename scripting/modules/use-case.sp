@@ -70,10 +70,10 @@ UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
     return UseCaseResult_Success;
 }
 
-void UseCase_SaveEntities(int client, int& entitiesAmount) {
+void UseCase_SaveEntities(int client) {
     Storage_Apply(Storage_SaveEntities);
 
-    entitiesAmount = EntityList_Size();
+    int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
         Message_LogListOfEntitiesCleared(client);
@@ -82,16 +82,16 @@ void UseCase_SaveEntities(int client, int& entitiesAmount) {
     }
 }
 
-void UseCase_LoadEntities() {
+void UseCase_LoadEntities(int client) {
     Storage_SaveCurrentMapName();
     Storage_Apply(Storage_LoadEntities);
 
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_LogNoEntities();
+        Message_LogNoEntities(client);
     } else {
-        Message_LogEntitiesLoaded(entitiesAmount);
+        Message_LogEntitiesLoaded(client, entitiesAmount);
     }
 }
 

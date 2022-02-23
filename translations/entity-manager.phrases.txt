@@ -57,4 +57,15 @@
         "#format"   "{1:d}"
         "en"    "Saved {1} entities"
     }
+
+    "No entities for loading"
+    {
+        "en"    "No entities for loading"
+    }
+
+    "Entities loaded"
+    {
+        "#format"   "{1:d}"
+        "en"    "Loaded {1} entities"
+    }
 }

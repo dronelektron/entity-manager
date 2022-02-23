@@ -4,6 +4,7 @@ void Command_Create() {
     RegAdminCmd("sm_entitymanager_delete", Command_Delete, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_restore", Command_Restore, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_save", Command_Save, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_load", Command_Load, ADMFLAG_GENERIC);
 }
 
 public Action Command_Freeze(int client, int args) {
@@ -91,14 +92,28 @@ public Action Command_Restore(int client, int args) {
 }
 
 public Action Command_Save(int client, int args) {
-    int entitiesAmount;
+    UseCase_SaveEntities(client);
 
-    UseCase_SaveEntities(client, entitiesAmount);
+    int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
         Message_ReplyListOfEntitiesCleared(client);
     } else {
         Message_ReplyEntitiesSaved(client, entitiesAmount);
+    }
+
+    return Plugin_Handled;
+}
+
+public Action Command_Load(int client, int args) {
+    UseCase_LoadEntities(client);
+
+    int entitiesAmount = EntityList_Size();
+
+    if (entitiesAmount == 0) {
+        Message_ReplyNoEntitiesForLoading(client);
+    } else {
+        Message_ReplyEntitiesLoaded(client, entitiesAmount);
     }
 
     return Plugin_Handled;

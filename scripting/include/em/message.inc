@@ -4,3 +4,4 @@
 #define _message_included
 
 #define PREFIX "[Entity manager] "
+#define CONSOLE 0

@@ -38,6 +38,14 @@ void Message_ReplyEntitiesSaved(int client, int entitiesCount) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entities saved", entitiesCount);
 }
 
+void Message_ReplyNoEntitiesForLoading(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "No entities for loading");
+}
+
+void Message_ReplyEntitiesLoaded(int client, int entitiesCount) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entities loaded", entitiesCount);
+}
+
 void Message_LogFrozeEntity(int client, int entity) {
     LogMessage("\"%L\" froze entity %d", client, entity);
 }
@@ -62,10 +70,16 @@ void Message_LogEntitiesSaved(int client, int entitiesAmount) {
     LogMessage("\"%L\" saved %d entities", client, entitiesAmount);
 }
 
-void Message_LogNoEntities() {
-    LogMessage("No entities for this map");
+void Message_LogNoEntities(int client) {
+    if (client == CONSOLE) {
+        LogMessage("No entities for this map");
+    }
 }
 
-void Message_LogEntitiesLoaded(int entitiesAmount) {
-    LogMessage("Loaded %d entities", entitiesAmount);
+void Message_LogEntitiesLoaded(int client, int entitiesAmount) {
+    if (client == CONSOLE) {
+        LogMessage("Loaded %d entities", entitiesAmount);
+    } else {
+        LogMessage("\"%L\" loaded %d entities", client, entitiesAmount);
+    }
 }
