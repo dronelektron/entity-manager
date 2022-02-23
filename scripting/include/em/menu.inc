@@ -7,9 +7,9 @@
 
 #define ENTITY_MANAGEMENT "Entity management"
 
-#define ACTION_ENTITY_FREEZE "Freeze entity"
-#define ACTION_ENTITY_UNFREEZE "Unfreeze entity"
-#define ACTION_ENTITY_DELETE "Delete entity"
-#define ACTION_ENTITY_RESTORE "Restore entity"
-#define ACTION_ENTITIES_SAVE "Save entities"
-#define ACTION_ENTITIES_LOAD "Load entities"
+#define ITEM_ENTITY_FREEZE "Freeze entity"
+#define ITEM_ENTITY_UNFREEZE "Unfreeze entity"
+#define ITEM_ENTITY_DELETE "Delete entity"
+#define ITEM_ENTITY_RESTORE "Restore entity"
+#define ITEM_ENTITIES_SAVE "Save entities"
+#define ITEM_ENTITIES_LOAD "Load entities"
