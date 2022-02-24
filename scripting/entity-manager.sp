@@ -42,6 +42,7 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
+    Storage_SaveCurrentMapName();
     UseCase_LoadEntities(CONSOLE);
 }
 

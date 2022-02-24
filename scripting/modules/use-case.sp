@@ -97,7 +97,6 @@ void UseCase_SaveEntities(int client) {
 }
 
 void UseCase_LoadEntities(int client) {
-    Storage_SaveCurrentMapName();
     Storage_Apply(Storage_LoadEntities);
 
     int entitiesAmount = EntityList_Size();
