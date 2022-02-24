@@ -30,12 +30,12 @@
         "ru"    "Объект {1} разморожен"
     }
 
-    "Entity deleted"
+    "Entity has been deleted"
     {
         "ru"    "Объект {1} удален"
     }
 
-    "Entity restored"
+    "Entity has been restored"
     {
         "ru"    "Объект {1} восстановлен"
     }

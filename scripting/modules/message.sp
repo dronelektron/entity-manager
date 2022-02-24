@@ -31,7 +31,7 @@ void MessageLog_EntityUnfrozen(int client, int entity) {
 }
 
 void MessageActivity_EntityDeleted(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity deleted", entity);
+    ShowActivity2(client, PREFIX, "%t", "Entity has been deleted", entity);
 }
 
 void MessageLog_EntityDeleted(int client, int entity) {
@@ -39,7 +39,7 @@ void MessageLog_EntityDeleted(int client, int entity) {
 }
 
 void MessageActivity_EntityRestored(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity restored", entity);
+    ShowActivity2(client, PREFIX, "%t", "Entity has been restored", entity);
 }
 
 void MessageLog_EntityRestored(int client, int entity) {
