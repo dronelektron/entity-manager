@@ -14,48 +14,48 @@ void Message_ReplyEntityNotDeleted(int client, int entity) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity not deleted", entity);
 }
 
-void Message_ReplyEntityFrozen(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity has been frozen", entity);
+void Message_ActivityEntityFrozen(int client, int entity) {
+    ShowActivity2(client, PREFIX, "%t", "Entity has been frozen", entity);
 }
 
 void Message_LogEntityFrozen(int client, int entity) {
     LogMessage("\"%L\" froze entity %d", client, entity);
 }
 
-void Message_ReplyEntityUnfrozen(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity has been unfrozen", entity);
+void Message_ActivityEntityUnfrozen(int client, int entity) {
+    ShowActivity2(client, PREFIX, "%t", "Entity has been unfrozen", entity);
 }
 
 void Message_LogEntityUnfrozen(int client, int entity) {
     LogMessage("\"%L\" unfroze entity %d", client, entity);
 }
 
-void Message_ReplyEntityDeleted(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity deleted", entity);
+void Message_ActivityEntityDeleted(int client, int entity) {
+    ShowActivity2(client, PREFIX, "%t", "Entity deleted", entity);
 }
 
 void Message_LogEntityDeleted(int client, int entity) {
     LogMessage("\"%L\" deleted entity %d", client, entity);
 }
 
-void Message_ReplyEntityRestored(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity restored", entity);
+void Message_ActivityEntityRestored(int client, int entity) {
+    ShowActivity2(client, PREFIX, "%t", "Entity restored", entity);
 }
 
 void Message_LogEntityRestored(int client, int entity) {
     LogMessage("\"%L\" restored entity %d", client, entity);
 }
 
-void Message_ReplyListOfEntitiesCleared(int client) {
-    ReplyToCommand(client, "%s%t", PREFIX, "List of entities cleared");
+void Message_ActivityListOfEntitiesCleared(int client) {
+    ShowActivity2(client, PREFIX, "%t", "List of entities cleared");
 }
 
 void Message_LogListOfEntitiesCleared(int client) {
     LogMessage("\"%L\" cleared the list of entities", client);
 }
 
-void Message_ReplyEntitiesSaved(int client, int entitiesAmount) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entities saved", entitiesAmount);
+void Message_ActivityEntitiesSaved(int client, int entitiesAmount) {
+    ShowActivity2(client, PREFIX, "%t", "Entities saved", entitiesAmount);
 }
 
 void Message_LogEntitiesSaved(int client, int entitiesAmount) {
@@ -63,7 +63,9 @@ void Message_LogEntitiesSaved(int client, int entitiesAmount) {
 }
 
 void Message_ReplyNoEntitiesForLoading(int client) {
-    ReplyToCommand(client, "%s%t", PREFIX, "No entities for loading");
+    if (client != CONSOLE) {
+        ReplyToCommand(client, "%s%t", PREFIX, "No entities for loading");
+    }
 }
 
 void Message_LogNoEntitiesForLoading(int client) {
@@ -72,8 +74,10 @@ void Message_LogNoEntitiesForLoading(int client) {
     }
 }
 
-void Message_ReplyEntitiesLoaded(int client, int entitiesAmount) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entities loaded", entitiesAmount);
+void Message_ActivityEntitiesLoaded(int client, int entitiesAmount) {
+    if (client != CONSOLE) {
+        ShowActivity2(client, PREFIX, "%t", "Entities loaded", entitiesAmount);
+    }
 }
 
 void Message_LogEntitiesLoaded(int client, int entitiesAmount) {

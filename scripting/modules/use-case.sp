@@ -15,7 +15,7 @@ void UseCase_FreezeEntity(int client) {
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_ReplyEntityFrozen(client, entity);
+    Message_ActivityEntityFrozen(client, entity);
     Message_LogEntityFrozen(client, entity);
 }
 
@@ -36,7 +36,7 @@ void UseCase_UnfreezeEntity(int client) {
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
-    Message_ReplyEntityUnfrozen(client, entity);
+    Message_ActivityEntityUnfrozen(client, entity);
     Message_LogEntityUnfrozen(client, entity);
 }
 
@@ -57,7 +57,7 @@ void UseCase_DeleteEntity(int client) {
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_ReplyEntityDeleted(client, entity);
+    Message_ActivityEntityDeleted(client, entity);
     Message_LogEntityDeleted(client, entity);
 }
 
@@ -78,7 +78,7 @@ void UseCase_RestoreEntity(int client) {
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
-    Message_ReplyEntityRestored(client, entity);
+    Message_ActivityEntityRestored(client, entity);
     Message_LogEntityRestored(client, entity);
 }
 
@@ -88,10 +88,10 @@ void UseCase_SaveEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ReplyListOfEntitiesCleared(client);
+        Message_ActivityListOfEntitiesCleared(client);
         Message_LogListOfEntitiesCleared(client);
     } else {
-        Message_ReplyEntitiesSaved(client, entitiesAmount);
+        Message_ActivityEntitiesSaved(client, entitiesAmount);
         Message_LogEntitiesSaved(client, entitiesAmount);
     }
 }
@@ -106,7 +106,7 @@ void UseCase_LoadEntities(int client) {
         Message_ReplyNoEntitiesForLoading(client);
         Message_LogNoEntitiesForLoading(client);
     } else {
-        Message_ReplyEntitiesLoaded(client, entitiesAmount);
+        Message_ActivityEntitiesLoaded(client, entitiesAmount);
         Message_LogEntitiesLoaded(client, entitiesAmount);
     }
 }
