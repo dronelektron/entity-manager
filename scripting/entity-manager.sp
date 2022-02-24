@@ -9,7 +9,6 @@
 #include "em/menu"
 #include "em/message"
 #include "em/storage"
-#include "em/use-case"
 
 #include "modules/console-command.sp"
 #include "modules/console-variable.sp"
@@ -24,7 +23,7 @@ public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "0.2.0",
+    version = "1.0.0",
     url = ""
 };
 

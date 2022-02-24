@@ -1,73 +1,85 @@
-UseCaseResult UseCase_FreezeEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_FreezeEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        MessageReply_EntityNotFound(client);
+
+        return;
     }
 
     if (EntityList_Contains(entity)) {
-        return UseCaseResult_AlreadyHasAction;
+        MessageReply_EntityAlreadyHasAction(client, entity);
+
+        return;
     }
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_EntityFrozen(client, entity, MessageType_Log);
-
-    return UseCaseResult_Success;
+    MessageActivity_EntityFrozen(client, entity);
+    MessageLog_EntityFrozen(client, entity);
 }
 
-UseCaseResult UseCase_UnfreezeEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_UnfreezeEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        MessageReply_EntityNotFound(client);
+
+        return;
     }
 
     if (!EntityList_IsFrozen(entity)) {
-        return UseCaseResult_NotFrozen;
+        MessageReply_EntityNotFrozen(client, entity);
+
+        return;
     }
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
-    Message_EntityUnfrozen(client, entity, MessageType_Log);
-
-    return UseCaseResult_Success;
+    MessageActivity_EntityUnfrozen(client, entity);
+    MessageLog_EntityUnfrozen(client, entity);
 }
 
-UseCaseResult UseCase_DeleteEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_DeleteEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        MessageReply_EntityNotFound(client);
+
+        return;
     }
 
     if (EntityList_Contains(entity)) {
-        return UseCaseResult_AlreadyHasAction;
+        MessageReply_EntityAlreadyHasAction(client, entity);
+
+        return;
     }
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_EntityDeleted(client, entity, MessageType_Log);
-
-    return UseCaseResult_Success;
+    MessageActivity_EntityDeleted(client, entity);
+    MessageLog_EntityDeleted(client, entity);
 }
 
-UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_RestoreEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        MessageReply_EntityNotFound(client);
+
+        return;
     }
 
     if (!EntityList_IsDeleted(entity)) {
-        return UseCaseResult_NotDeleted;
+        MessageReply_EntityNotDeleted(client, entity);
+
+        return;
     }
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
-    Message_EntityRestored(client, entity, MessageType_Log);
-
-    return UseCaseResult_Success;
+    MessageActivity_EntityRestored(client, entity);
+    MessageLog_EntityRestored(client, entity);
 }
 
 void UseCase_SaveEntities(int client) {
@@ -76,9 +88,11 @@ void UseCase_SaveEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ListOfEntitiesCleared(client, MessageType_Log);
+        MessageActivity_ListOfEntitiesCleared(client);
+        MessageLog_ListOfEntitiesCleared(client);
     } else {
-        Message_EntitiesSaved(client, entitiesAmount, MessageType_Log);
+        MessageActivity_EntitiesSaved(client, entitiesAmount);
+        MessageLog_EntitiesSaved(client, entitiesAmount);
     }
 }
 
@@ -89,9 +103,11 @@ void UseCase_LoadEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_NoEntitiesForLoading(client, MessageType_Log);
+        MessageReply_NoEntitiesForLoading(client);
+        MessageLog_NoEntitiesForLoading(client);
     } else {
-        Message_EntitiesLoaded(client, entitiesAmount, MessageType_Log);
+        MessageActivity_EntitiesLoaded(client, entitiesAmount);
+        MessageLog_EntitiesLoaded(client, entitiesAmount);
     }
 }
 

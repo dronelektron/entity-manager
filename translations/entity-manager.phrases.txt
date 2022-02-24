@@ -35,13 +35,13 @@
         "en"    "Entity {1} has been unfrozen"
     }
 
-    "Entity deleted"
+    "Entity has been deleted"
     {
         "#format"   "{1:d}"
         "en"    "Entity {1} deleted"
     }
 
-    "Entity restored"
+    "Entity has been restored"
     {
         "#format"   "{1:d}"
         "en"    "Entity {1} restored"

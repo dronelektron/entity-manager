@@ -31,4 +31,9 @@ Allows you to perform various actions with objects at the beginning of the round
 
 ### Notes
 
-To identify objects, their **index** is used, which can change when the number of slots on the server changes. In a future version of the plugin, it is planned to use a more secure method for identifying objects.
+To identify objects, their **index** is used, which can change, when:
+
+* The number of slots on the server changes
+* Other plugins are creating/removing entities
+
+In a future version of the plugin, it is planned to use a more secure method for identifying objects.
