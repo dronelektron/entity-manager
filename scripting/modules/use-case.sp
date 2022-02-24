@@ -2,84 +2,84 @@ void UseCase_FreezeEntity(int client) {
     int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+        MessageReply_EntityNotFound(client);
 
         return;
     }
 
     if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
+        MessageReply_EntityAlreadyHasAction(client, entity);
 
         return;
     }
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    Message_ActivityEntityFrozen(client, entity);
-    Message_LogEntityFrozen(client, entity);
+    MessageActivity_EntityFrozen(client, entity);
+    MessageLog_EntityFrozen(client, entity);
 }
 
 void UseCase_UnfreezeEntity(int client) {
     int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+        MessageReply_EntityNotFound(client);
 
         return;
     }
 
     if (!EntityList_IsFrozen(entity)) {
-        Message_ReplyEntityNotFrozen(client, entity);
+        MessageReply_EntityNotFrozen(client, entity);
 
         return;
     }
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
-    Message_ActivityEntityUnfrozen(client, entity);
-    Message_LogEntityUnfrozen(client, entity);
+    MessageActivity_EntityUnfrozen(client, entity);
+    MessageLog_EntityUnfrozen(client, entity);
 }
 
 void UseCase_DeleteEntity(int client) {
     int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+        MessageReply_EntityNotFound(client);
 
         return;
     }
 
     if (EntityList_Contains(entity)) {
-        Message_ReplyEntityAlreadyHasAction(client, entity);
+        MessageReply_EntityAlreadyHasAction(client, entity);
 
         return;
     }
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    Message_ActivityEntityDeleted(client, entity);
-    Message_LogEntityDeleted(client, entity);
+    MessageActivity_EntityDeleted(client, entity);
+    MessageLog_EntityDeleted(client, entity);
 }
 
 void UseCase_RestoreEntity(int client) {
     int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        Message_ReplyEntityNotFound(client);
+        MessageReply_EntityNotFound(client);
 
         return;
     }
 
     if (!EntityList_IsDeleted(entity)) {
-        Message_ReplyEntityNotDeleted(client, entity);
+        MessageReply_EntityNotDeleted(client, entity);
 
         return;
     }
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
-    Message_ActivityEntityRestored(client, entity);
-    Message_LogEntityRestored(client, entity);
+    MessageActivity_EntityRestored(client, entity);
+    MessageLog_EntityRestored(client, entity);
 }
 
 void UseCase_SaveEntities(int client) {
@@ -88,11 +88,11 @@ void UseCase_SaveEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ActivityListOfEntitiesCleared(client);
-        Message_LogListOfEntitiesCleared(client);
+        MessageActivity_ListOfEntitiesCleared(client);
+        MessageLog_ListOfEntitiesCleared(client);
     } else {
-        Message_ActivityEntitiesSaved(client, entitiesAmount);
-        Message_LogEntitiesSaved(client, entitiesAmount);
+        MessageActivity_EntitiesSaved(client, entitiesAmount);
+        MessageLog_EntitiesSaved(client, entitiesAmount);
     }
 }
 
@@ -103,11 +103,11 @@ void UseCase_LoadEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        Message_ReplyNoEntitiesForLoading(client);
-        Message_LogNoEntitiesForLoading(client);
+        MessageReply_NoEntitiesForLoading(client);
+        MessageLog_NoEntitiesForLoading(client);
     } else {
-        Message_ActivityEntitiesLoaded(client, entitiesAmount);
-        Message_LogEntitiesLoaded(client, entitiesAmount);
+        MessageActivity_EntitiesLoaded(client, entitiesAmount);
+        MessageLog_EntitiesLoaded(client, entitiesAmount);
     }
 }
 
