@@ -1,73 +1,85 @@
-UseCaseResult UseCase_FreezeEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_FreezeEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        Message_ReplyEntityNotFound(client);
+
+        return;
     }
 
     if (EntityList_Contains(entity)) {
-        return UseCaseResult_AlreadyHasAction;
+        Message_ReplyEntityAlreadyHasAction(client, entity);
+
+        return;
     }
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
+    Message_ReplyEntityFrozen(client, entity);
     Message_LogEntityFrozen(client, entity);
-
-    return UseCaseResult_Success;
 }
 
-UseCaseResult UseCase_UnfreezeEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_UnfreezeEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        Message_ReplyEntityNotFound(client);
+
+        return;
     }
 
     if (!EntityList_IsFrozen(entity)) {
-        return UseCaseResult_NotFrozen;
+        Message_ReplyEntityNotFrozen(client, entity);
+
+        return;
     }
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
+    Message_ReplyEntityUnfrozen(client, entity);
     Message_LogEntityUnfrozen(client, entity);
-
-    return UseCaseResult_Success;
 }
 
-UseCaseResult UseCase_DeleteEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_DeleteEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        Message_ReplyEntityNotFound(client);
+
+        return;
     }
 
     if (EntityList_Contains(entity)) {
-        return UseCaseResult_AlreadyHasAction;
+        Message_ReplyEntityAlreadyHasAction(client, entity);
+
+        return;
     }
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
+    Message_ReplyEntityDeleted(client, entity);
     Message_LogEntityDeleted(client, entity);
-
-    return UseCaseResult_Success;
 }
 
-UseCaseResult UseCase_RestoreEntity(int client, int& entity) {
-    entity = Entity_Trace(client);
+void UseCase_RestoreEntity(int client) {
+    int entity = Entity_Trace(client);
 
     if (entity <= ENTITY_WORLD) {
-        return UseCaseResult_EntityNotFound;
+        Message_ReplyEntityNotFound(client);
+
+        return;
     }
 
     if (!EntityList_IsDeleted(entity)) {
-        return UseCaseResult_NotDeleted;
+        Message_ReplyEntityNotDeleted(client, entity);
+
+        return;
     }
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
+    Message_ReplyEntityRestored(client, entity);
     Message_LogEntityRestored(client, entity);
-
-    return UseCaseResult_Success;
 }
 
 void UseCase_SaveEntities(int client) {
@@ -76,8 +88,10 @@ void UseCase_SaveEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
+        Message_ReplyListOfEntitiesCleared(client);
         Message_LogListOfEntitiesCleared(client);
     } else {
+        Message_ReplyEntitiesSaved(client, entitiesAmount);
         Message_LogEntitiesSaved(client, entitiesAmount);
     }
 }
@@ -89,8 +103,10 @@ void UseCase_LoadEntities(int client) {
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
+        Message_ReplyNoEntitiesForLoading(client);
         Message_LogNoEntitiesForLoading(client);
     } else {
+        Message_ReplyEntitiesLoaded(client, entitiesAmount);
         Message_LogEntitiesLoaded(client, entitiesAmount);
     }
 }

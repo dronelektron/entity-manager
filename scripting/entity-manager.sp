@@ -9,7 +9,6 @@
 #include "em/menu"
 #include "em/message"
 #include "em/storage"
-#include "em/use-case"
 
 #include "modules/console-command.sp"
 #include "modules/console-variable.sp"

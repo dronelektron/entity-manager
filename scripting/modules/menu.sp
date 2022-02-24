@@ -16,18 +16,17 @@ void Menu_EntityManager(int client) {
 public int MenuHandler_EntityManager(Menu menu, MenuAction action, int param1, int param2) {
     if (action == MenuAction_Select) {
         char info[MENU_TEXT_MAX_SIZE];
-        int entity;
 
         menu.GetItem(param2, info, sizeof(info));
 
         if (strcmp(info, ITEM_ENTITY_FREEZE) == 0) {
-            UseCase_FreezeEntity(param1, entity);
+            UseCase_FreezeEntity(param1);
         } else if (strcmp(info, ITEM_ENTITY_UNFREEZE) == 0) {
-            UseCase_UnfreezeEntity(param1, entity);
+            UseCase_UnfreezeEntity(param1);
         } else if (strcmp(info, ITEM_ENTITY_DELETE) == 0) {
-            UseCase_DeleteEntity(param1, entity);
+            UseCase_DeleteEntity(param1);
         } else if (strcmp(info, ITEM_ENTITY_RESTORE) == 0) {
-            UseCase_RestoreEntity(param1, entity);
+            UseCase_RestoreEntity(param1);
         } else if (strcmp(info, ITEM_ENTITIES_SAVE) == 0) {
             UseCase_SaveEntities(param1);
         } else if (strcmp(info, ITEM_ENTITIES_LOAD) == 0) {
