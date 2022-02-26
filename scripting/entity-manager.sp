@@ -6,18 +6,22 @@
 
 #include "em/entity-list"
 #include "em/entity"
+#include "em/math"
 #include "em/menu"
 #include "em/message"
 #include "em/storage"
+#include "em/visualizer"
 
 #include "modules/console-command.sp"
 #include "modules/console-variable.sp"
 #include "modules/entity-list.sp"
 #include "modules/entity.sp"
+#include "modules/math.sp"
 #include "modules/menu.sp"
 #include "modules/message.sp"
 #include "modules/storage.sp"
 #include "modules/use-case.sp"
+#include "modules/visualizer.sp"
 
 public Plugin myinfo = {
     name = "Entity manager",
@@ -42,6 +46,7 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
+    Visualizer_PrecacheTempEntityModels();
     Storage_SaveCurrentMapName();
     UseCase_LoadEntities(CONSOLE);
 }

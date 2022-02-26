@@ -82,6 +82,20 @@ void UseCase_RestoreEntity(int client) {
     MessageLog_EntityRestored(client, entity);
 }
 
+void UseCase_ShowPathToEntities(int client) {
+    float playerMiddle[VECTOR_SIZE];
+    float entityMiddle[VECTOR_SIZE];
+
+    Math_CalculateMiddle(client, playerMiddle);
+
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        int entity = EntityList_GetId(entityIndex);
+
+        Math_CalculateMiddle(entity, entityMiddle);
+        Visualizer_DrawBeam(client, playerMiddle, entityMiddle);
+    }
+}
+
 void UseCase_SaveEntities(int client) {
     Storage_Apply(Storage_SaveEntities);
 

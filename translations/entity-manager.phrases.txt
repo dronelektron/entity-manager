@@ -94,6 +94,11 @@
         "en"    "Restore entity"
     }
 
+    "Show path"
+    {
+        "en"    "Show path to entities"
+    }
+
     "Save entities"
     {
         "en"    "Save entities"
