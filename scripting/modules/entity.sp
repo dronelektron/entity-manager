@@ -8,30 +8,26 @@ void Entity_Unfreeze(int entity) {
 
 void Entity_Delete(int entity) {
     Entity_Freeze(entity);
-    Entity_Hide(entity);
+    Entity_SetVisibility(entity, ENTITY_VISIBLE_NO);
 }
 
 void Entity_Restore(int entity) {
-    Entity_Show(entity);
+    Entity_SetVisibility(entity, ENTITY_VISIBLE_YES);
     Entity_Unfreeze(entity);
 }
 
-void Entity_Hide(int entity) {
-    int effects = GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
+void Entity_SetVisibility(int entity, bool isVisible) {
+    int effects = Entity_GetEffects(entity);
 
-    effects |= EFFECT_FLAG_NO_DRAW;
+    if (isVisible) {
+        Entity_RemoveEffect(effects, EFFECT_FLAG_NO_DRAW);
+        Entity_SetSolidType(entity, SOLID_TYPE_VPHYSICS);
+    } else {
+        Entity_AddEffect(effects, EFFECT_FLAG_NO_DRAW);
+        Entity_SetSolidType(entity, SOLID_TYPE_NONE);
+    }
 
-    SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
-    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, SOLID_TYPE_NONE);
-}
-
-void Entity_Show(int entity) {
-    int effects = GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
-
-    effects &= ~EFFECT_FLAG_NO_DRAW;
-
-    SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
-    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, SOLID_TYPE_VPHYSICS);
+    Entity_SetEffects(entity, effects);
 }
 
 int Entity_Trace(int client) {
@@ -53,18 +49,38 @@ bool TraceEntityFilter_Players(int entity, int contentsMask) {
     return entity > MaxClients;
 }
 
+void Entity_AddEffect(int& effects, int flag) {
+    effects |= flag;
+}
+
+void Entity_RemoveEffect(int& effects, int flag) {
+    effects &= ~flag;
+}
+
+int Entity_GetEffects(int entity) {
+    return GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
+}
+
+void Entity_SetEffects(int entity, int effects) {
+    SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
+}
+
+void Entity_SetSolidType(int entity, int solidType) {
+    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, solidType);
+}
+
 void Entity_GetPosition(int entity, float position[VECTOR_SIZE]) {
-    GetEntPropVector(entity, Prop_Send, "m_vecOrigin", position);
+    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_ORIGIN, position);
 }
 
 void Entity_GetMinBounds(int entity, float minBounds[VECTOR_SIZE]) {
-    GetEntPropVector(entity, Prop_Send, "m_vecMins", minBounds);
+    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MINS, minBounds);
 }
 
 void Entity_GetMaxBounds(int entity, float maxBounds[VECTOR_SIZE]) {
-    GetEntPropVector(entity, Prop_Send, "m_vecMaxs", maxBounds);
+    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MAXS, maxBounds);
 }
 
 void Entity_GetAngles(int entity, float angles[VECTOR_SIZE]) {
-    GetEntPropVector(entity, Prop_Send, "m_angRotation", angles);
+    GetEntPropVector(entity, Prop_Send, ENT_PROP_ANG_ROTATION, angles);
 }
