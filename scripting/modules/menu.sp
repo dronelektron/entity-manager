@@ -7,6 +7,7 @@ void Menu_EntityManager(int client) {
     Menu_AddItem(menu, ITEM_ENTITY_UNFREEZE, client);
     Menu_AddItem(menu, ITEM_ENTITY_DELETE, client);
     Menu_AddItem(menu, ITEM_ENTITY_RESTORE, client);
+    Menu_AddItem(menu, ITEM_ENTITIES_SHOW_PATH, client);
     Menu_AddItem(menu, ITEM_ENTITIES_SAVE, client);
     Menu_AddItem(menu, ITEM_ENTITIES_LOAD, client);
 
@@ -27,6 +28,8 @@ public int MenuHandler_EntityManager(Menu menu, MenuAction action, int param1, i
             UseCase_DeleteEntity(param1);
         } else if (strcmp(info, ITEM_ENTITY_RESTORE) == 0) {
             UseCase_RestoreEntity(param1);
+        } else if (strcmp(info, ITEM_ENTITIES_SHOW_PATH) == 0) {
+            UseCase_ShowPathToEntities(param1);
         } else if (strcmp(info, ITEM_ENTITIES_SAVE) == 0) {
             UseCase_SaveEntities(param1);
         } else if (strcmp(info, ITEM_ENTITIES_LOAD) == 0) {

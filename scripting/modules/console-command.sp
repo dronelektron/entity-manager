@@ -4,6 +4,7 @@ void Command_Create() {
     RegAdminCmd("sm_entitymanager_unfreeze", Command_Unfreeze, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_delete", Command_Delete, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_restore", Command_Restore, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_show_path", Command_ShowPath, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_save", Command_Save, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_load", Command_Load, ADMFLAG_GENERIC);
 }
@@ -34,6 +35,12 @@ public Action Command_Delete(int client, int args) {
 
 public Action Command_Restore(int client, int args) {
     UseCase_RestoreEntity(client);
+
+    return Plugin_Handled;
+}
+
+public Action Command_ShowPath(int client, int args) {
+    UseCase_ShowPathToEntities(client);
 
     return Plugin_Handled;
 }
