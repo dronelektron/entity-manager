@@ -29,7 +29,7 @@ public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "1.1.0",
+    version = "1.2.0",
     url = "https://github.com/dronelektron/entity-manager"
 };
 
