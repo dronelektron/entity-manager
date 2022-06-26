@@ -5,7 +5,7 @@
 
 #define MENU_TEXT_MAX_SIZE (32 * 4)
 
-#define ENTITY_MANAGEMENT "Entity management"
+#define ENTITY_MANAGER "Entity manager"
 
 #define ITEM_ENTITY_FREEZE "Freeze entity"
 #define ITEM_ENTITY_UNFREEZE "Unfreeze entity"
@@ -14,3 +14,5 @@
 #define ITEM_ENTITIES_SHOW_PATH "Show path"
 #define ITEM_ENTITIES_SAVE "Save entities"
 #define ITEM_ENTITIES_LOAD "Load entities"
+
+#define ADMIN_MENU "adminmenu"

@@ -60,7 +60,7 @@
         "ru"    "Загружено {1} объектов"
     }
 
-    "Entity management"
+    "Entity manager"
     {
         "ru"    "Управление объектами"
     }

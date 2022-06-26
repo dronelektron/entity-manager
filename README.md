@@ -21,7 +21,6 @@ Allows you to perform various actions with objects at the beginning of the round
 
 ### Console Commands
 
-* sm_entitymanager - Open menu
 * sm_entitymanager_freeze - Freeze the entity you are looking at
 * sm_entitymanager_unfreeze - Unfreeze the entity you are looking at
 * sm_entitymanager_delete - Delete entity
