@@ -1,5 +1,4 @@
 void Command_Create() {
-    RegAdminCmd("sm_entitymanager", Command_Menu, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_freeze", Command_Freeze, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_unfreeze", Command_Unfreeze, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_delete", Command_Delete, ADMFLAG_GENERIC);
@@ -7,12 +6,6 @@ void Command_Create() {
     RegAdminCmd("sm_entitymanager_show_path", Command_ShowPath, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_save", Command_Save, ADMFLAG_GENERIC);
     RegAdminCmd("sm_entitymanager_load", Command_Load, ADMFLAG_GENERIC);
-}
-
-public Action Command_Menu(int client, int args) {
-    Menu_EntityManager(client);
-
-    return Plugin_Handled;
 }
 
 public Action Command_Freeze(int client, int args) {

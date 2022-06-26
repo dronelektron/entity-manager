@@ -1,5 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
+#undef REQUIRE_PLUGIN
+#include <adminmenu>
 
 #pragma semicolon 1
 #pragma newdecls required
@@ -36,6 +38,7 @@ public void OnPluginStart() {
     EntityList_Create();
     Command_Create();
     Variable_Create();
+    AdminMenu_Create();
     HookEvent("dod_round_start", Event_RoundStart);
     LoadTranslations("entity-manager.phrases");
     AutoExecConfig(true, "entity-manager");
@@ -49,6 +52,16 @@ public void OnMapStart() {
     Visualizer_PrecacheTempEntityModels();
     Storage_SaveCurrentMapName();
     UseCase_LoadEntities(CONSOLE);
+}
+
+public void OnAdminMenuReady(Handle topMenu) {
+    AdminMenu_OnReady(topMenu);
+}
+
+public void OnLibraryRemoved(const char[] name) {
+    if (strcmp(name, ADMIN_MENU) == 0) {
+        AdminMenu_Destroy();
+    }
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {

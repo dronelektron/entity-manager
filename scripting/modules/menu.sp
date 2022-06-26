@@ -1,53 +1,96 @@
-void Menu_EntityManager(int client) {
-    Menu menu = new Menu(MenuHandler_EntityManager);
+static TopMenu g_adminMenu = null;
 
-    menu.SetTitle("%T", ENTITY_MANAGEMENT, client);
+static TopMenuObject g_entityManagerCategory = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemFreezeEntity = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemUnfreezeEntity = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemDeleteEntity = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemRestoreEntity = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemShowPath = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemSave = INVALID_TOPMENUOBJECT;
+static TopMenuObject g_menuItemLoad = INVALID_TOPMENUOBJECT;
 
-    Menu_AddItem(menu, ITEM_ENTITY_FREEZE, client);
-    Menu_AddItem(menu, ITEM_ENTITY_UNFREEZE, client);
-    Menu_AddItem(menu, ITEM_ENTITY_DELETE, client);
-    Menu_AddItem(menu, ITEM_ENTITY_RESTORE, client);
-    Menu_AddItem(menu, ITEM_ENTITIES_SHOW_PATH, client);
-    Menu_AddItem(menu, ITEM_ENTITIES_SAVE, client);
-    Menu_AddItem(menu, ITEM_ENTITIES_LOAD, client);
+void AdminMenu_Create() {
+    TopMenu topMenu = GetAdminTopMenu();
 
-    menu.Display(client, MENU_TIME_FOREVER);
+    if (LibraryExists(ADMIN_MENU) && topMenu != null) {
+        OnAdminMenuReady(topMenu);
+    }
 }
 
-public int MenuHandler_EntityManager(Menu menu, MenuAction action, int param1, int param2) {
-    if (action == MenuAction_Select) {
-        char info[MENU_TEXT_MAX_SIZE];
+void AdminMenu_Destroy() {
+    g_adminMenu = null;
+}
 
-        menu.GetItem(param2, info, sizeof(info));
+public void AdminMenu_OnReady(Handle topMenuHandle) {
+    TopMenu topMenu = TopMenu.FromHandle(topMenuHandle);
 
-        if (strcmp(info, ITEM_ENTITY_FREEZE) == 0) {
-            UseCase_FreezeEntity(param1);
-        } else if (strcmp(info, ITEM_ENTITY_UNFREEZE) == 0) {
-            UseCase_UnfreezeEntity(param1);
-        } else if (strcmp(info, ITEM_ENTITY_DELETE) == 0) {
-            UseCase_DeleteEntity(param1);
-        } else if (strcmp(info, ITEM_ENTITY_RESTORE) == 0) {
-            UseCase_RestoreEntity(param1);
-        } else if (strcmp(info, ITEM_ENTITIES_SHOW_PATH) == 0) {
-            UseCase_ShowPathToEntities(param1);
-        } else if (strcmp(info, ITEM_ENTITIES_SAVE) == 0) {
-            UseCase_SaveEntities(param1);
-        } else if (strcmp(info, ITEM_ENTITIES_LOAD) == 0) {
-            UseCase_LoadEntities(param1);
-        }
-
-        Menu_EntityManager(param1);
-    } else if (action == MenuAction_End) {
-        delete menu;
+    if (topMenu == g_adminMenu) {
+        return;
     }
 
-    return 0;
+    g_adminMenu = topMenu;
+
+    AdminMenu_Fill();
 }
 
-void Menu_AddItem(Menu menu, char[] phrase, int client) {
-    char item[MENU_TEXT_MAX_SIZE];
+void AdminMenu_Fill() {
+    g_entityManagerCategory = g_adminMenu.AddCategory(ENTITY_MANAGER, AdminMenuHandler_EntityManager);
 
-    Format(item, sizeof(item), "%T", phrase, client);
+    if (g_entityManagerCategory != INVALID_TOPMENUOBJECT) {
+        g_menuItemFreezeEntity = AdminMenu_AddItem(ITEM_ENTITY_FREEZE);
+        g_menuItemUnfreezeEntity = AdminMenu_AddItem(ITEM_ENTITY_UNFREEZE);
+        g_menuItemDeleteEntity = AdminMenu_AddItem(ITEM_ENTITY_DELETE);
+        g_menuItemRestoreEntity = AdminMenu_AddItem(ITEM_ENTITY_RESTORE);
+        g_menuItemShowPath = AdminMenu_AddItem(ITEM_ENTITIES_SHOW_PATH);
+        g_menuItemSave = AdminMenu_AddItem(ITEM_ENTITIES_SAVE);
+        g_menuItemLoad = AdminMenu_AddItem(ITEM_ENTITIES_LOAD);
+    }
+}
 
-    menu.AddItem(phrase, item);
+TopMenuObject AdminMenu_AddItem(const char[] name) {
+    return g_adminMenu.AddItem(name, AdminMenuHandler_EntityManager, g_entityManagerCategory);
+}
+
+public void AdminMenuHandler_EntityManager(TopMenu topmenu, TopMenuAction action, TopMenuObject topobj_id, int param, char[] buffer, int maxlength) {
+    if (action == TopMenuAction_DisplayOption) {
+        if (topobj_id == g_entityManagerCategory) {
+            Format(buffer, maxlength, "%T", ENTITY_MANAGER, param);
+        } else if (topobj_id == g_menuItemFreezeEntity) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITY_FREEZE, param);
+        } else if (topobj_id == g_menuItemUnfreezeEntity) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITY_UNFREEZE, param);
+        } else if (topobj_id == g_menuItemDeleteEntity) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITY_DELETE, param);
+        } else if (topobj_id == g_menuItemRestoreEntity) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITY_RESTORE, param);
+        } else if (topobj_id == g_menuItemShowPath) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITIES_SHOW_PATH, param);
+        } else if (topobj_id == g_menuItemSave) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITIES_SAVE, param);
+        } else if (topobj_id == g_menuItemLoad) {
+            Format(buffer, maxlength, "%T", ITEM_ENTITIES_LOAD, param);
+        }
+    } else if (action == TopMenuAction_DisplayTitle) {
+        if (topobj_id == g_entityManagerCategory) {
+            Format(buffer, maxlength, "%T", ENTITY_MANAGER, param);
+        }
+    } else if (action == TopMenuAction_SelectOption) {
+        if (topobj_id == g_menuItemFreezeEntity) {
+            UseCase_FreezeEntity(param);
+        } else if (topobj_id == g_menuItemUnfreezeEntity) {
+            UseCase_UnfreezeEntity(param);
+        } else if (topobj_id == g_menuItemDeleteEntity) {
+            UseCase_DeleteEntity(param);
+        } else if (topobj_id == g_menuItemRestoreEntity) {
+            UseCase_RestoreEntity(param);
+        } else if (topobj_id == g_menuItemShowPath) {
+            UseCase_ShowPathToEntities(param);
+        } else if (topobj_id == g_menuItemSave) {
+            UseCase_SaveEntities(param);
+        } else if (topobj_id == g_menuItemLoad) {
+            UseCase_LoadEntities(param);
+        }
+
+        topmenu.DisplayCategory(g_entityManagerCategory, param);
+    }
 }
