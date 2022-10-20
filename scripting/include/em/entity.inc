@@ -3,7 +3,7 @@
 #endif
 #define _em_entity_included
 
-#define VECTOR_SIZE 3
+#define ENTITY_NOT_FOUND -1
 #define ENTITY_WORLD 0
 
 #define ENT_PROP_EFFECTS "m_fEffects"
