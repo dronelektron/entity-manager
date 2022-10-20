@@ -16,8 +16,8 @@ Allows you to perform various actions with objects at the beginning of the round
 
 ### Console Variables
 
-* sm_entitymanager_allow_freezing - Freeze (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
-* sm_entitymanager_allow_deletion - Delete (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
+* sm_entitymanager_auto_freezing - Freeze (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
+* sm_entitymanager_auto_deletion - Delete (1 - yes, 0 - no) objects at the beginning of the round [default: "1"]
 
 ### Console Commands
 
