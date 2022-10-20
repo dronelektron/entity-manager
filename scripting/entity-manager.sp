@@ -45,8 +45,8 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
-    Storage_BuildConfigPath();
     Visualizer_PrecacheTempEntityModels();
+    Storage_BuildConfigPath();
     UseCase_LoadEntities(CONSOLE);
 }
 
