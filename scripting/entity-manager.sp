@@ -3,9 +3,6 @@
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
-#pragma semicolon 1
-#pragma newdecls required
-
 #include "em/entity-list"
 #include "em/entity"
 #include "em/math"
@@ -34,7 +31,6 @@ public Plugin myinfo = {
 };
 
 public void OnPluginStart() {
-    Storage_BuildConfigPath();
     EntityList_Create();
     Command_Create();
     Variable_Create();
@@ -49,8 +45,8 @@ public void OnPluginEnd() {
 }
 
 public void OnMapStart() {
+    Storage_BuildConfigPath();
     Visualizer_PrecacheTempEntityModels();
-    Storage_SaveCurrentMapName();
     UseCase_LoadEntities(CONSOLE);
 }
 
