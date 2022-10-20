@@ -3,8 +3,6 @@
 #endif
 #define _em_entity_list_included
 
-#define ENTITY_NOT_FOUND -1
-
 #define ENTITY_FIELD_ID 0
 #define ENTITY_FIELD_ACTION 1
 

@@ -3,9 +3,6 @@
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
-#pragma semicolon 1
-#pragma newdecls required
-
 #include "em/entity-list"
 #include "em/entity"
 #include "em/math"
@@ -29,12 +26,11 @@ public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "1.2.1",
+    version = "1.3.0",
     url = "https://github.com/dronelektron/entity-manager"
 };
 
 public void OnPluginStart() {
-    Storage_BuildConfigPath();
     EntityList_Create();
     Command_Create();
     Variable_Create();
@@ -50,7 +46,7 @@ public void OnPluginEnd() {
 
 public void OnMapStart() {
     Visualizer_PrecacheTempEntityModels();
-    Storage_SaveCurrentMapName();
+    Storage_BuildConfigPath();
     UseCase_LoadEntities(CONSOLE);
 }
 

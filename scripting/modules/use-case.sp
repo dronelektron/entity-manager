@@ -15,8 +15,7 @@ void UseCase_FreezeEntity(int client) {
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
-    MessageActivity_EntityFrozen(client, entity);
-    MessageLog_EntityFrozen(client, entity);
+    Message_EntityFrozen(client, entity);
 }
 
 void UseCase_UnfreezeEntity(int client) {
@@ -36,8 +35,7 @@ void UseCase_UnfreezeEntity(int client) {
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
-    MessageActivity_EntityUnfrozen(client, entity);
-    MessageLog_EntityUnfrozen(client, entity);
+    Message_EntityUnfrozen(client, entity);
 }
 
 void UseCase_DeleteEntity(int client) {
@@ -57,8 +55,7 @@ void UseCase_DeleteEntity(int client) {
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
-    MessageActivity_EntityDeleted(client, entity);
-    MessageLog_EntityDeleted(client, entity);
+    Message_EntityDeleted(client, entity);
 }
 
 void UseCase_RestoreEntity(int client) {
@@ -78,8 +75,7 @@ void UseCase_RestoreEntity(int client) {
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
-    MessageActivity_EntityRestored(client, entity);
-    MessageLog_EntityRestored(client, entity);
+    Message_EntityRestored(client, entity);
 }
 
 void UseCase_ShowPathToEntities(int client) {
@@ -97,30 +93,26 @@ void UseCase_ShowPathToEntities(int client) {
 }
 
 void UseCase_SaveEntities(int client) {
-    Storage_Apply(Storage_SaveEntities);
+    Storage_Apply(Storage_SaveEntities, IMPORT_NO);
 
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        MessageActivity_ListOfEntitiesCleared(client);
-        MessageLog_ListOfEntitiesCleared(client);
+        Message_ListOfEntitiesCleared(client);
     } else {
-        MessageActivity_EntitiesSaved(client, entitiesAmount);
-        MessageLog_EntitiesSaved(client, entitiesAmount);
+        Message_EntitiesSaved(client, entitiesAmount);
     }
 }
 
 void UseCase_LoadEntities(int client) {
-    Storage_Apply(Storage_LoadEntities);
+    Storage_Apply(Storage_LoadEntities, IMPORT_YES);
 
     int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
-        MessageReply_NoEntitiesForLoading(client);
-        MessageLog_NoEntitiesForLoading(client);
+        Message_NoEntitiesForLoading(client);
     } else {
-        MessageActivity_EntitiesLoaded(client, entitiesAmount);
-        MessageLog_EntitiesLoaded(client, entitiesAmount);
+        Message_EntitiesLoaded(client, entitiesAmount);
     }
 }
 

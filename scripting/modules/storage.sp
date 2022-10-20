@@ -1,24 +1,25 @@
-static char g_mapName[MAP_NAME_MAX_LENGTH];
 static char g_configPath[PLATFORM_MAX_PATH];
 
-void Storage_SaveCurrentMapName() {
-    GetCurrentMap(g_mapName, sizeof(g_mapName));
-}
-
 void Storage_BuildConfigPath() {
-    BuildPath(Path_SM, g_configPath, sizeof(g_configPath), "configs/entity-manager.txt");
+    BuildPath(Path_SM, g_configPath, sizeof(g_configPath), "configs/entity-manager");
+
+    if (!DirExists(g_configPath)) {
+        CreateDirectory(g_configPath, PERMISSIONS);
+    }
+
+    char mapName[PLATFORM_MAX_PATH];
+
+    GetCurrentMap(mapName, sizeof(mapName));
+    Format(g_configPath, sizeof(g_configPath), "%s/%s.txt", g_configPath, mapName);
 }
 
 void Storage_SaveEntities(KeyValues kv) {
+    DeleteFile(g_configPath);
+
     int entitiesAmount = EntityList_Size();
 
-    if (kv.JumpToKey(g_mapName)) {
-        kv.DeleteThis();
-        kv.Rewind();
-    }
-
-    if (entitiesAmount > 0) {
-        kv.JumpToKey(g_mapName, true);
+    if (entitiesAmount == 0) {
+        return;
     }
 
     char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
@@ -29,7 +30,7 @@ void Storage_SaveEntities(KeyValues kv) {
 
         IntToString(entity, entityId, sizeof(entityId));
 
-        kv.JumpToKey(entityId, true);
+        kv.JumpToKey(entityId, CREATE_YES);
         kv.SetNum(STORAGE_KEY_ACTION, action);
         kv.GoBack();
     }
@@ -41,7 +42,7 @@ void Storage_SaveEntities(KeyValues kv) {
 void Storage_LoadEntities(KeyValues kv) {
     EntityList_Clear();
 
-    if (!kv.JumpToKey(g_mapName) || !kv.GotoFirstSubKey()) {
+    if (!kv.GotoFirstSubKey()) {
         return;
     }
 
@@ -57,10 +58,10 @@ void Storage_LoadEntities(KeyValues kv) {
     } while (kv.GotoNextKey());
 }
 
-void Storage_Apply(StorageOperation operation) {
+void Storage_Apply(StorageOperation operation, bool isImport) {
     KeyValues kv = new KeyValues("Entities");
 
-    if (FileExists(g_configPath)) {
+    if (FileExists(g_configPath) && isImport) {
         kv.ImportFromFile(g_configPath);
         kv.Rewind();
     }
