@@ -1,7 +1,7 @@
 void UseCase_FreezeEntity(int client) {
     int entity = Entity_Trace(client);
 
-    if (entity <= ENTITY_WORLD) {
+    if (UseCase_IsBadEntity(entity)) {
         MessageReply_EntityNotFound(client);
 
         return;
@@ -22,7 +22,7 @@ void UseCase_FreezeEntity(int client) {
 void UseCase_UnfreezeEntity(int client) {
     int entity = Entity_Trace(client);
 
-    if (entity <= ENTITY_WORLD) {
+    if (UseCase_IsBadEntity(entity)) {
         MessageReply_EntityNotFound(client);
 
         return;
@@ -43,7 +43,7 @@ void UseCase_UnfreezeEntity(int client) {
 void UseCase_DeleteEntity(int client) {
     int entity = Entity_Trace(client);
 
-    if (entity <= ENTITY_WORLD) {
+    if (UseCase_IsBadEntity(entity)) {
         MessageReply_EntityNotFound(client);
 
         return;
@@ -64,7 +64,7 @@ void UseCase_DeleteEntity(int client) {
 void UseCase_RestoreEntity(int client) {
     int entity = Entity_Trace(client);
 
-    if (entity <= ENTITY_WORLD) {
+    if (UseCase_IsBadEntity(entity)) {
         MessageReply_EntityNotFound(client);
 
         return;
@@ -145,4 +145,8 @@ void UseCase_DisableEntityDamage(int entity) {
 
 public Action UseCaseHook_OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damageType) {
     return Plugin_Handled;
+}
+
+bool UseCase_IsBadEntity(int entity) {
+    return entity <= ENTITY_WORLD || !Entity_IsPropPhysics(entity);
 }

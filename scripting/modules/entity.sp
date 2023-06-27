@@ -84,3 +84,14 @@ void Entity_GetMaxBounds(int entity, float maxBounds[VECTOR_SIZE]) {
 void Entity_GetAngles(int entity, float angles[VECTOR_SIZE]) {
     GetEntPropVector(entity, Prop_Send, ENT_PROP_ANG_ROTATION, angles);
 }
+
+bool Entity_IsPropPhysics(int entity) {
+    char className[ENTITY_CLASS_NAME_SIZE];
+
+    GetEntityClassname(entity, className, sizeof(className));
+
+    bool isPropPhysics = strcmp(className, "prop_physics") == 0;
+    bool isPropPhysicsMultiplayer = strcmp(className, "prop_physics_multiplayer") == 0;
+
+    return isPropPhysics || isPropPhysicsMultiplayer;
+}

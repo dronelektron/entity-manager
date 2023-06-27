@@ -20,3 +20,5 @@
 
 #define ENTITY_VISIBLE_YES true
 #define ENTITY_VISIBLE_NO false
+
+#define ENTITY_CLASS_NAME_SIZE 32
