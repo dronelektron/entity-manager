@@ -15,6 +15,7 @@ void UseCase_FreezeEntity(int client) {
 
     Entity_Freeze(entity);
     EntityList_Add(entity, ENTITY_ACTION_FREEZE);
+    UseCase_DisableEntityDamage(entity);
     Message_EntityFrozen(client, entity);
 }
 
@@ -35,6 +36,7 @@ void UseCase_UnfreezeEntity(int client) {
 
     Entity_Unfreeze(entity);
     EntityList_Remove(entity);
+    UseCase_EnableEntityDamage(entity);
     Message_EntityUnfrozen(client, entity);
 }
 
@@ -55,6 +57,7 @@ void UseCase_DeleteEntity(int client) {
 
     Entity_Delete(entity);
     EntityList_Add(entity, ENTITY_ACTION_DELETE);
+    UseCase_DisableEntityDamage(entity);
     Message_EntityDeleted(client, entity);
 }
 
@@ -75,6 +78,7 @@ void UseCase_RestoreEntity(int client) {
 
     Entity_Restore(entity);
     EntityList_Remove(entity);
+    UseCase_EnableEntityDamage(entity);
     Message_EntityRestored(client, entity);
 }
 
@@ -126,5 +130,19 @@ void UseCase_ApplyActionToEntities() {
         } else if (action == ENTITY_ACTION_DELETE && Variable_IsDeletionAllowed()) {
             Entity_Delete(entity);
         }
+
+        UseCase_DisableEntityDamage(entity);
     }
+}
+
+void UseCase_EnableEntityDamage(int entity) {
+    SDKUnhook(entity, SDKHook_OnTakeDamage, UseCaseHook_OnTakeDamage);
+}
+
+void UseCase_DisableEntityDamage(int entity) {
+    SDKHook(entity, SDKHook_OnTakeDamage, UseCaseHook_OnTakeDamage);
+}
+
+public Action UseCaseHook_OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damageType) {
+    return Plugin_Handled;
 }

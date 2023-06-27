@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <sdkhooks>
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
