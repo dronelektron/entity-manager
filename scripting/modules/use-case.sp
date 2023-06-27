@@ -97,7 +97,7 @@ void UseCase_ShowPathToEntities(int client) {
 }
 
 void UseCase_SaveEntities(int client) {
-    Storage_Apply(Storage_SaveEntities, IMPORT_NO);
+    Storage_Apply(Storage_SaveEntities);
 
     int entitiesAmount = EntityList_Size();
 
@@ -109,7 +109,7 @@ void UseCase_SaveEntities(int client) {
 }
 
 void UseCase_LoadEntities(int client) {
-    Storage_Apply(Storage_LoadEntities, IMPORT_YES);
+    Storage_Apply(Storage_LoadEntities);
 
     int entitiesAmount = EntityList_Size();
 

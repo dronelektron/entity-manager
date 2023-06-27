@@ -42,6 +42,10 @@ void Storage_SaveEntities(KeyValues kv) {
 void Storage_LoadEntities(KeyValues kv) {
     EntityList_Clear();
 
+    if (FileExists(g_configPath)) {
+        kv.ImportFromFile(g_configPath);
+    }
+
     if (!kv.GotoFirstSubKey()) {
         return;
     }
@@ -58,13 +62,8 @@ void Storage_LoadEntities(KeyValues kv) {
     } while (kv.GotoNextKey());
 }
 
-void Storage_Apply(StorageOperation operation, bool isImport) {
+void Storage_Apply(StorageOperation operation) {
     KeyValues kv = new KeyValues("Entities");
-
-    if (FileExists(g_configPath) && isImport) {
-        kv.ImportFromFile(g_configPath);
-        kv.Rewind();
-    }
 
     Call_StartFunction(INVALID_HANDLE, operation);
     Call_PushCell(kv);

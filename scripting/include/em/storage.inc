@@ -13,7 +13,4 @@
 
 #define CREATE_YES true
 
-#define IMPORT_YES true
-#define IMPORT_NO false
-
 typedef StorageOperation = function void (KeyValues kv);
