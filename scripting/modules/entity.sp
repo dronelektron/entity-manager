@@ -90,8 +90,8 @@ bool Entity_IsPropPhysics(int entity) {
 
     GetEntityClassname(entity, className, sizeof(className));
 
-    bool isPropPhysics = strcmp(className, "prop_physics") == 0;
-    bool isPropPhysicsMultiplayer = strcmp(className, "prop_physics_multiplayer") == 0;
+    bool isPropPhysics = strcmp(className, PROP_PHYSICS) == 0;
+    bool isPropPhysicsMultiplayer = strcmp(className, PROP_PHYSICS_MULTIPLAYER) == 0;
 
     return isPropPhysics || isPropPhysicsMultiplayer;
 }

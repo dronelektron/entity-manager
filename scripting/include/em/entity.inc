@@ -22,3 +22,6 @@
 #define ENTITY_VISIBLE_NO false
 
 #define ENTITY_CLASS_NAME_SIZE 32
+
+#define PROP_PHYSICS "prop_physics"
+#define PROP_PHYSICS_MULTIPLAYER "prop_physics_multiplayer"
