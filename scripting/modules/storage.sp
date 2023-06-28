@@ -22,7 +22,7 @@ void Storage_SaveEntities(KeyValues kv) {
         return;
     }
 
-    char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
+    char name[ENTITY_NAME_SIZE];
     float position[3];
 
     for (int entityIndex = 0; entityIndex < entitiesAmount; entityIndex++) {
@@ -32,10 +32,10 @@ void Storage_SaveEntities(KeyValues kv) {
             continue;
         }
 
-        IntToString(entityIndex + 1, entityId, sizeof(entityId));
+        Storage_GenerateUniqueName(kv, name);
         EntityList_GetPosition(entityIndex, position);
 
-        kv.JumpToKey(entityId, CREATE_YES);
+        kv.JumpToKey(name, CREATE_YES);
         kv.SetNum(KEY_ACTION, action);
         kv.SetVector(KEY_POSITION, position);
         kv.GoBack();
@@ -75,4 +75,23 @@ void Storage_Apply(StorageOperation operation) {
     Call_Finish();
 
     delete kv;
+}
+
+static void Storage_GenerateUniqueName(KeyValues kv, char[] name) {
+    // "while (true)" gives warning 206
+    for (;;) {
+        Storage_GenerateName(name);
+
+        if (kv.JumpToKey(name)) {
+            kv.GoBack();
+        } else {
+            break;
+        }
+    }
+}
+
+static void Storage_GenerateName(char[] name) {
+    int randomInt = GetRandomInt(0, ~(1 << 31));
+
+    Format(name, ENTITY_NAME_SIZE, "%08X", randomInt);
 }
