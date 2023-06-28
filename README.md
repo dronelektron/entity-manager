@@ -25,6 +25,6 @@ Allows you to perform various actions with objects at the beginning of the round
 * sm_entitymanager_unfreeze - Unfreeze the entity you are looking at
 * sm_entitymanager_delete - Delete entity
 * sm_entitymanager_restore - Restore entity
-* sm_entitymanager_show_path - Show path to entities
+* sm_entitymanager_show_path <entity> - Show path to entity
 * sm_entitymanager_save - Save entities to file
 * sm_entitymanager_load - Load entities from file

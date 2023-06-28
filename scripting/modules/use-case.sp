@@ -82,23 +82,19 @@ void UseCase_RestoreEntity(int client) {
     Message_EntityRestored(client, entity);
 }
 
-void UseCase_ShowPathToEntities(int client) {
-    float playerMiddle[3];
+void UseCase_DrawPathToEntity(int client, int entity) {
+    if (EntityList_FindByEntity(entity) == ENTITY_NOT_FOUND || !EntityList_HasAction(entity)) {
+        MessageReply_EntityNotFound(client);
+
+        return;
+    }
+
+    float clientMiddle[3];
     float entityMiddle[3];
 
-    Math_GetMiddle(client, playerMiddle, BOUNDS_ROTATE_NO);
-
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int entity = EntityList_GetEntity(entityIndex);
-        int action = EntityList_GetAction(entityIndex);
-
-        if (entity == ENTITY_NOT_FOUND || action == ENTITY_ACTION_NONE) {
-            continue;
-        }
-
-        Math_GetMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
-        Visualizer_DrawBeam(client, playerMiddle, entityMiddle);
-    }
+    Math_GetMiddle(client, clientMiddle, BOUNDS_ROTATE_NO);
+    Math_GetMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
+    Visualizer_DrawBeam(client, clientMiddle, entityMiddle);
 }
 
 void UseCase_SaveEntities(int client) {

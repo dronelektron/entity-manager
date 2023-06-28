@@ -84,13 +84,62 @@ public void AdminMenuHandler_EntityManager(TopMenu topMenu, TopMenuAction action
         } else if (topMenuObject == g_menuItemRestoreEntity) {
             UseCase_RestoreEntity(param);
         } else if (topMenuObject == g_menuItemShowPath) {
-            UseCase_ShowPathToEntities(param);
+            Menu_ShowPath(param);
         } else if (topMenuObject == g_menuItemSave) {
             UseCase_SaveEntities(param);
         } else if (topMenuObject == g_menuItemLoad) {
             UseCase_LoadEntities(param);
         }
 
-        topMenu.DisplayCategory(g_entityManagerCategory, param);
+        if (topMenuObject != g_menuItemShowPath) {
+            topMenu.DisplayCategory(g_entityManagerCategory, param);
+        }
     }
+}
+
+void Menu_ShowPath(int client, int fromItem = 0) {
+    Menu menu = new Menu(MenuHandler_ShowPath);
+
+    menu.SetTitle("%T", ITEM_ENTITIES_SHOW_PATH, client);
+
+    char info[INFO_SIZE];
+    char item[ITEM_SIZE];
+
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        int entity = EntityList_GetEntity(entityIndex);
+        int action = EntityList_GetAction(entityIndex);
+
+        if (entity == ENTITY_NOT_FOUND || action == ENTITY_ACTION_NONE) {
+            continue;
+        }
+
+        IntToString(entity, info, sizeof(info));
+        Format(item, sizeof(item), "%T", "Object", client, entity);
+
+        menu.AddItem(info, item);
+    }
+
+    menu.ExitBackButton = true;
+    menu.DisplayAt(client, fromItem, MENU_TIME_FOREVER);
+}
+
+public int MenuHandler_ShowPath(Menu menu, MenuAction action, int param1, int param2) {
+    if (action == MenuAction_Select) {
+        char info[INFO_SIZE];
+
+        menu.GetItem(param2, info, sizeof(info));
+
+        int entity = StringToInt(info);
+
+        UseCase_DrawPathToEntity(param1, entity);
+        Menu_ShowPath(param1, menu.Selection);
+    } else if (action == MenuAction_Cancel) {
+        if (param2 == MenuCancel_ExitBack && g_adminMenu != null) {
+            g_adminMenu.Display(param1, TopMenuPosition_LastCategory);
+        }
+    } else if (action == MenuAction_End) {
+        delete menu;
+    } 
+
+    return 0;
 }

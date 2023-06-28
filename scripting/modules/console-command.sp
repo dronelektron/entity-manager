@@ -33,7 +33,15 @@ public Action Command_Restore(int client, int args) {
 }
 
 public Action Command_ShowPath(int client, int args) {
-    UseCase_ShowPathToEntities(client);
+    if (args < 1) {
+        Message_ShowPathUsage(client);
+
+        return Plugin_Handled;
+    }
+
+    int entity = GetCmdArgInt(1);
+
+    UseCase_DrawPathToEntity(client, entity);
 
     return Plugin_Handled;
 }

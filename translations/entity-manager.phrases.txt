@@ -108,4 +108,10 @@
     {
         "en"    "Load entities"
     }
+
+    "Object"
+    {
+        "#format"   "{1:d}"
+        "en"    "Object {1}"
+    }
 }

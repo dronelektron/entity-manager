@@ -1,3 +1,7 @@
+void Message_ShowPathUsage(int client) {
+    ReplyToCommand(client, "%s%s", PREFIX, "Usage: sm_entitymanager_show_path <entity>");
+}
+
 void MessageReply_EntityNotFound(int client) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity not found");
 }
