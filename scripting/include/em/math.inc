@@ -3,7 +3,6 @@
 #endif
 #define _em_math_included
 
-#define VECTOR_SIZE 3
 #define HALF 0.5
 
 #define PITCH 0

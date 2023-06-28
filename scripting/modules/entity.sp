@@ -31,8 +31,8 @@ void Entity_SetVisibility(int entity, bool isVisible) {
 }
 
 int Entity_Trace(int client) {
-    float eyesPosition[VECTOR_SIZE];
-    float eyesAngles[VECTOR_SIZE];
+    float eyesPosition[3];
+    float eyesAngles[3];
 
     GetClientEyePosition(client, eyesPosition);
     GetClientEyeAngles(client, eyesAngles);
@@ -69,19 +69,19 @@ void Entity_SetSolidType(int entity, int solidType) {
     SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, solidType);
 }
 
-void Entity_GetPosition(int entity, float position[VECTOR_SIZE]) {
+void Entity_GetPosition(int entity, float position[3]) {
     GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_ORIGIN, position);
 }
 
-void Entity_GetMinBounds(int entity, float minBounds[VECTOR_SIZE]) {
+void Entity_GetMinBounds(int entity, float minBounds[3]) {
     GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MINS, minBounds);
 }
 
-void Entity_GetMaxBounds(int entity, float maxBounds[VECTOR_SIZE]) {
+void Entity_GetMaxBounds(int entity, float maxBounds[3]) {
     GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MAXS, maxBounds);
 }
 
-void Entity_GetAngles(int entity, float angles[VECTOR_SIZE]) {
+void Entity_GetAngles(int entity, float angles[3]) {
     GetEntPropVector(entity, Prop_Send, ENT_PROP_ANG_ROTATION, angles);
 }
 

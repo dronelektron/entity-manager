@@ -8,7 +8,7 @@ void Visualizer_PrecacheTempEntityModels() {
     g_beamHaloIndex  = PrecacheModel("materials/sprites/halo01.vmt");
 }
 
-void Visualizer_DrawBeam(int client, const float start[VECTOR_SIZE], const float end[VECTOR_SIZE]) {
+void Visualizer_DrawBeam(int client, const float start[3], const float end[3]) {
     TE_SetupBeamPoints(
         start,
         end,

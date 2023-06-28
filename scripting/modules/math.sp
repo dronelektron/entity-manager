@@ -1,20 +1,20 @@
-void Math_CalculateMiddle(int entity, float middle[VECTOR_SIZE], bool isRotateBounds) {
-    float position[VECTOR_SIZE];
-    float minBounds[VECTOR_SIZE];
-    float maxBounds[VECTOR_SIZE];
-    float globalMinBounds[VECTOR_SIZE];
-    float globalMaxBounds[VECTOR_SIZE];
+void Math_CalculateMiddle(int entity, float middle[3], bool rotateBounds) {
+    float position[3];
+    float minBounds[3];
+    float maxBounds[3];
+    float globalMinBounds[3];
+    float globalMaxBounds[3];
 
     Entity_GetPosition(entity, position);
     Entity_GetMinBounds(entity, minBounds);
     Entity_GetMaxBounds(entity, maxBounds);
 
-    if (isRotateBounds) {
-        float degAngles[VECTOR_SIZE];
-        float radAngles[VECTOR_SIZE];
-        float rotationMat[VECTOR_SIZE][VECTOR_SIZE];
-        float rotatedMinBounds[VECTOR_SIZE];
-        float rotatedMaxBounds[VECTOR_SIZE];
+    if (rotateBounds) {
+        float degAngles[3];
+        float radAngles[3];
+        float rotationMat[3][3];
+        float rotatedMinBounds[3];
+        float rotatedMaxBounds[3];
 
         Entity_GetAngles(entity, degAngles);
 
@@ -34,13 +34,13 @@ void Math_CalculateMiddle(int entity, float middle[VECTOR_SIZE], bool isRotateBo
     ScaleVector(middle, HALF);
 }
 
-void Math_DegreesToRadiansVector(const float degAngles[VECTOR_SIZE], float radAngles[VECTOR_SIZE]) {
+void Math_DegreesToRadiansVector(const float degAngles[3], float radAngles[3]) {
     radAngles[PITCH] = DegToRad(degAngles[PITCH]);
     radAngles[YAW] = DegToRad(degAngles[YAW]);
     radAngles[ROLL] = DegToRad(degAngles[ROLL]);
 }
 
-void Math_GetRotationMatrix(const float angles[VECTOR_SIZE], float rotationMat[VECTOR_SIZE][VECTOR_SIZE]) {
+void Math_GetRotationMatrix(const float angles[3], float rotationMat[3][3]) {
     float cosBeta = Cosine(angles[PITCH]);
     float sinBeta = Sine(angles[PITCH]);
     float cosAlpha = Cosine(angles[YAW]);
@@ -59,11 +59,11 @@ void Math_GetRotationMatrix(const float angles[VECTOR_SIZE], float rotationMat[V
     rotationMat[2][2] = cosBeta * cosGamma;
 }
 
-void Math_MultiplyMatrixByVector(const float mat[VECTOR_SIZE][VECTOR_SIZE], const float vec[VECTOR_SIZE], float result[VECTOR_SIZE]) {
-    for (int i = 0; i < VECTOR_SIZE; i++) {
+void Math_MultiplyMatrixByVector(const float mat[3][3], const float vec[3], float result[3]) {
+    for (int i = 0; i < 3; i++) {
         result[i] = 0.0;
 
-        for (int j = 0; j < VECTOR_SIZE; j++) {
+        for (int j = 0; j < 3; j++) {
             result[i] += mat[i][j] * vec[j];
         }
     }

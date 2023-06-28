@@ -83,7 +83,7 @@ void UseCase_RestoreEntity(int client) {
 }
 
 void UseCase_ShowPathToEntities(int client) {
-    float playerMiddle[VECTOR_SIZE];
+    float playerMiddle[3];
 
     Math_CalculateMiddle(client, playerMiddle, BOUNDS_ROTATE_NO);
 
@@ -95,7 +95,7 @@ void UseCase_ShowPathToEntities(int client) {
         }
 
         int entity = EntityList_GetEntity(entityIndex);
-        float entityMiddle[VECTOR_SIZE];
+        float entityMiddle[3];
 
         Math_CalculateMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
         Visualizer_DrawBeam(client, playerMiddle, entityMiddle);
