@@ -3,5 +3,7 @@ void Event_Create() {
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
     UseCase_ApplyActionToEntities();
 }
