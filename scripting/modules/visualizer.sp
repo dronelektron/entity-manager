@@ -1,7 +1,7 @@
 static int g_beamModelIndex;
 static int g_beamHaloIndex;
 
-static const int BEAM_COLOR[] = {255, 255, 0, 255};
+static const int BEAM_COLOR[] = {0, 255, 255, 255};
 
 void Visualizer_PrecacheTempEntityModels() {
     g_beamModelIndex = PrecacheModel("materials/sprites/laser.vmt");
