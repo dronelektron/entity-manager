@@ -1,4 +1,4 @@
-void Math_CalculateMiddle(int entity, float middle[3], bool rotateBounds) {
+void Math_GetMiddle(int entity, float middle[3], bool rotateBounds) {
     float position[3];
     float minBounds[3];
     float maxBounds[3];

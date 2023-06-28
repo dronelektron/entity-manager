@@ -86,7 +86,7 @@ void UseCase_ShowPathToEntities(int client) {
     float playerMiddle[3];
     float entityMiddle[3];
 
-    Math_CalculateMiddle(client, playerMiddle, BOUNDS_ROTATE_NO);
+    Math_GetMiddle(client, playerMiddle, BOUNDS_ROTATE_NO);
 
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
         int entity = EntityList_GetEntity(entityIndex);
@@ -96,7 +96,7 @@ void UseCase_ShowPathToEntities(int client) {
             continue;
         }
 
-        Math_CalculateMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
+        Math_GetMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
         Visualizer_DrawBeam(client, playerMiddle, entityMiddle);
     }
 }
