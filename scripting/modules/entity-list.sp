@@ -5,6 +5,12 @@ void EntityList_Create() {
 }
 
 void EntityList_Clear() {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        StringMap data = g_entities.Get(entityIndex);
+
+        CloseHandle(data);
+    }
+
     g_entities.Clear();
 }
 
