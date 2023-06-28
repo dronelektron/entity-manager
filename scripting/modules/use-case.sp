@@ -88,7 +88,7 @@ void UseCase_ShowPathToEntities(int client) {
     Math_CalculateMiddle(client, playerMiddle, BOUNDS_ROTATE_NO);
 
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int entity = EntityList_GetId(entityIndex);
+        int entity = EntityList_GetEntity(entityIndex);
         float entityMiddle[VECTOR_SIZE];
 
         Math_CalculateMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
@@ -122,7 +122,7 @@ void UseCase_LoadEntities(int client) {
 
 void UseCase_ApplyActionToEntities() {
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int entity = EntityList_GetId(entityIndex);
+        int entity = EntityList_GetEntity(entityIndex);
         int action = EntityList_GetAction(entityIndex);
 
         if (action == ENTITY_ACTION_FREEZE && Variable_IsFreezeAllowed()) {

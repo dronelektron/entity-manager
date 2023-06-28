@@ -25,7 +25,7 @@ void Storage_SaveEntities(KeyValues kv) {
     char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
 
     for (int entityIndex = 0; entityIndex < entitiesAmount; entityIndex++) {
-        int entity = EntityList_GetId(entityIndex);
+        int entity = EntityList_GetEntity(entityIndex);
         int action = EntityList_GetAction(entityIndex);
 
         IntToString(entity, entityId, sizeof(entityId));

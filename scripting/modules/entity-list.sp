@@ -9,19 +9,59 @@ void EntityList_Clear() {
 }
 
 int EntityList_Size() {
-    return g_entities.Length / ENTITY_FIELDS_AMOUNT;
+    return g_entities.Length;
 }
 
-int EntityList_GetId(int index) {
-    int offset = EntityList_GetOffset(index);
+void EntityList_Add(int entity, int action) {
+    StringMap data = new StringMap();
 
-    return g_entities.Get(offset + ENTITY_FIELD_ID);
+    data.SetValue(KEY_ENTITY, entity);
+    data.SetValue(KEY_ACTION, action);
+    g_entities.Push(data);
+}
+
+void EntityList_Remove(int entity) {
+    int index = EntityList_Find(entity);
+
+    if (index != ENTITY_NOT_FOUND) {
+        StringMap data = g_entities.Get(index);
+
+        CloseHandle(data);
+    }
+
+    g_entities.Erase(index);
+}
+
+int EntityList_Find(int entity) {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        StringMap data = g_entities.Get(entityIndex);
+        int tempEntity = ENTITY_NOT_FOUND;
+
+        data.GetValue(KEY_ENTITY, tempEntity);
+
+        if (entity == tempEntity) {
+            return entityIndex;
+        }
+    }
+
+    return ENTITY_NOT_FOUND;
+}
+
+int EntityList_GetEntity(int index) {
+    return EntityList_GetField(index, KEY_ENTITY);
 }
 
 int EntityList_GetAction(int index) {
-    int offset = EntityList_GetOffset(index);
+    return EntityList_GetField(index, KEY_ACTION);
+}
 
-    return g_entities.Get(offset + ENTITY_FIELD_ACTION);
+static int EntityList_GetField(int index, const char[] key) {
+    StringMap data = g_entities.Get(index);
+    int field;
+
+    data.GetValue(key, field);
+
+    return field;
 }
 
 bool EntityList_Contains(int entity) {
@@ -36,39 +76,7 @@ bool EntityList_IsDeleted(int entity) {
     return EntityList_CheckAction(entity, ENTITY_ACTION_DELETE);
 }
 
-void EntityList_Add(int entity, int action) {
-    g_entities.Push(entity);
-    g_entities.Push(action);
-}
-
-void EntityList_Remove(int entity) {
-    int index = EntityList_Find(entity);
-
-    if (index != ENTITY_NOT_FOUND) {
-        int offset = EntityList_GetOffset(index);
-
-        g_entities.Erase(offset + ENTITY_FIELD_ACTION);
-        g_entities.Erase(offset + ENTITY_FIELD_ID);
-    }
-}
-
-int EntityList_Find(int entity) {
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int tempEntity = EntityList_GetId(entityIndex);
-
-        if (entity == tempEntity) {
-            return entityIndex;
-        }
-    }
-
-    return ENTITY_NOT_FOUND;
-}
-
-int EntityList_GetOffset(int index) {
-    return index * ENTITY_FIELDS_AMOUNT;
-}
-
-bool EntityList_CheckAction(int entity, int action) {
+static bool EntityList_CheckAction(int entity, int action) {
     int index = EntityList_Find(entity);
 
     if (index == ENTITY_NOT_FOUND) {
