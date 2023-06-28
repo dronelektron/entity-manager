@@ -4,10 +4,6 @@ void EntityList_Create() {
     g_entities = new ArrayList();
 }
 
-void EntityList_Destroy() {
-    delete g_entities;
-}
-
 void EntityList_Clear() {
     g_entities.Clear();
 }

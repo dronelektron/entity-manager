@@ -42,10 +42,6 @@ public void OnPluginStart() {
     AutoExecConfig(true, "entity-manager");
 }
 
-public void OnPluginEnd() {
-    EntityList_Destroy();
-}
-
 public void OnMapStart() {
     Visualizer_PrecacheTempEntityModels();
     Storage_BuildConfigPath();
