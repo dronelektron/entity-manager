@@ -51,46 +51,46 @@ TopMenuObject AdminMenu_AddItem(const char[] name) {
     return g_adminMenu.AddItem(name, AdminMenuHandler_EntityManager, g_entityManagerCategory);
 }
 
-public void AdminMenuHandler_EntityManager(TopMenu topmenu, TopMenuAction action, TopMenuObject topobj_id, int param, char[] buffer, int maxlength) {
-    if (action == TopMenuAction_DisplayOption) {
-        if (topobj_id == g_entityManagerCategory) {
-            Format(buffer, maxlength, "%T", ENTITY_MANAGER, param);
-        } else if (topobj_id == g_menuItemFreezeEntity) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITY_FREEZE, param);
-        } else if (topobj_id == g_menuItemUnfreezeEntity) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITY_UNFREEZE, param);
-        } else if (topobj_id == g_menuItemDeleteEntity) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITY_DELETE, param);
-        } else if (topobj_id == g_menuItemRestoreEntity) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITY_RESTORE, param);
-        } else if (topobj_id == g_menuItemShowPath) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITIES_SHOW_PATH, param);
-        } else if (topobj_id == g_menuItemSave) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITIES_SAVE, param);
-        } else if (topobj_id == g_menuItemLoad) {
-            Format(buffer, maxlength, "%T", ITEM_ENTITIES_LOAD, param);
+public void AdminMenuHandler_EntityManager(TopMenu topMenu, TopMenuAction action, TopMenuObject topMenuObject, int param, char[] buffer, int maxLength) {
+    if (action == TopMenuAction_DisplayTitle) {
+        if (topMenuObject == g_entityManagerCategory) {
+            Format(buffer, maxLength, "%T", ENTITY_MANAGER, param);
         }
-    } else if (action == TopMenuAction_DisplayTitle) {
-        if (topobj_id == g_entityManagerCategory) {
-            Format(buffer, maxlength, "%T", ENTITY_MANAGER, param);
+    } else if (action == TopMenuAction_DisplayOption) {
+        if (topMenuObject == g_entityManagerCategory) {
+            Format(buffer, maxLength, "%T", ENTITY_MANAGER, param);
+        } else if (topMenuObject == g_menuItemFreezeEntity) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITY_FREEZE, param);
+        } else if (topMenuObject == g_menuItemUnfreezeEntity) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITY_UNFREEZE, param);
+        } else if (topMenuObject == g_menuItemDeleteEntity) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITY_DELETE, param);
+        } else if (topMenuObject == g_menuItemRestoreEntity) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITY_RESTORE, param);
+        } else if (topMenuObject == g_menuItemShowPath) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITIES_SHOW_PATH, param);
+        } else if (topMenuObject == g_menuItemSave) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITIES_SAVE, param);
+        } else if (topMenuObject == g_menuItemLoad) {
+            Format(buffer, maxLength, "%T", ITEM_ENTITIES_LOAD, param);
         }
     } else if (action == TopMenuAction_SelectOption) {
-        if (topobj_id == g_menuItemFreezeEntity) {
+        if (topMenuObject == g_menuItemFreezeEntity) {
             UseCase_FreezeEntity(param);
-        } else if (topobj_id == g_menuItemUnfreezeEntity) {
+        } else if (topMenuObject == g_menuItemUnfreezeEntity) {
             UseCase_UnfreezeEntity(param);
-        } else if (topobj_id == g_menuItemDeleteEntity) {
+        } else if (topMenuObject == g_menuItemDeleteEntity) {
             UseCase_DeleteEntity(param);
-        } else if (topobj_id == g_menuItemRestoreEntity) {
+        } else if (topMenuObject == g_menuItemRestoreEntity) {
             UseCase_RestoreEntity(param);
-        } else if (topobj_id == g_menuItemShowPath) {
+        } else if (topMenuObject == g_menuItemShowPath) {
             UseCase_ShowPathToEntities(param);
-        } else if (topobj_id == g_menuItemSave) {
+        } else if (topMenuObject == g_menuItemSave) {
             UseCase_SaveEntities(param);
-        } else if (topobj_id == g_menuItemLoad) {
+        } else if (topMenuObject == g_menuItemLoad) {
             UseCase_LoadEntities(param);
         }
 
-        topmenu.DisplayCategory(g_entityManagerCategory, param);
+        topMenu.DisplayCategory(g_entityManagerCategory, param);
     }
 }
