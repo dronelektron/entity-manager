@@ -140,6 +140,7 @@ void UseCase_SaveEntities(int client) {
 }
 
 void UseCase_LoadEntities(int client) {
+    UseCase_ClearEntitiesAction();
     Storage_Apply(Storage_LoadEntities);
 
     int entitiesAmount = EntityList_EntitiesAmountWithAction();
@@ -148,6 +149,12 @@ void UseCase_LoadEntities(int client) {
         Message_NoEntitiesForLoading(client);
     } else {
         Message_EntitiesLoaded(client, entitiesAmount);
+    }
+}
+
+void UseCase_ClearEntitiesAction() {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        EntityList_SetAction(entityIndex, ENTITY_ACTION_NONE);
     }
 }
 

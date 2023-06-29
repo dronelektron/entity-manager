@@ -46,8 +46,6 @@ void Storage_SaveEntities(KeyValues kv) {
 }
 
 void Storage_LoadEntities(KeyValues kv) {
-    EntityList_Clear();
-
     if (FileExists(g_configPath)) {
         kv.ImportFromFile(g_configPath);
     }
