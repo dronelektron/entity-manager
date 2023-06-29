@@ -24,6 +24,8 @@
 #include "modules/use-case.sp"
 #include "modules/visualizer.sp"
 
+#define AUTO_CREATE_YES true
+
 public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
@@ -39,7 +41,7 @@ public void OnPluginStart() {
     AdminMenu_Create();
     Event_Create();
     LoadTranslations("entity-manager.phrases");
-    AutoExecConfig(true, "entity-manager");
+    AutoExecConfig(AUTO_CREATE_YES, "entity-manager");
 }
 
 public void OnMapStart() {
