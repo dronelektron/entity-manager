@@ -5,6 +5,11 @@ Allows you to perform various actions with objects at the beginning of the round
 * Freeze
 * Delete
 
+You can only apply actions to the following types of objects:
+
+* prop_physics
+* prop_physics_multiplayer
+
 ### Supported Games
 
 * Day of Defeat: Source
@@ -25,15 +30,6 @@ Allows you to perform various actions with objects at the beginning of the round
 * sm_entitymanager_unfreeze - Unfreeze the entity you are looking at
 * sm_entitymanager_delete - Delete entity
 * sm_entitymanager_restore - Restore entity
-* sm_entitymanager_show_path - Show path to entities
+* sm_entitymanager_show_path &lt;entity&gt; - Show path to entity
 * sm_entitymanager_save - Save entities to file
 * sm_entitymanager_load - Load entities from file
-
-### Notes
-
-To identify objects, their **index** is used, which can change, when:
-
-* The number of slots on the server changes
-* Other plugins are creating/removing entities
-
-In a future version of the plugin, it is planned to use a more secure method for identifying objects.

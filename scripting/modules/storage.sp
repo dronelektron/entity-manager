@@ -16,22 +16,28 @@ void Storage_BuildConfigPath() {
 void Storage_SaveEntities(KeyValues kv) {
     DeleteFile(g_configPath);
 
-    int entitiesAmount = EntityList_Size();
+    int entitiesAmount = EntityList_EntitiesAmountWithAction();
 
     if (entitiesAmount == 0) {
         return;
     }
 
-    char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
+    char name[ENTITY_NAME_SIZE];
+    float position[3];
 
-    for (int entityIndex = 0; entityIndex < entitiesAmount; entityIndex++) {
-        int entity = EntityList_GetId(entityIndex);
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
         int action = EntityList_GetAction(entityIndex);
 
-        IntToString(entity, entityId, sizeof(entityId));
+        if (action == ENTITY_ACTION_NONE) {
+            continue;
+        }
 
-        kv.JumpToKey(entityId, CREATE_YES);
-        kv.SetNum(STORAGE_KEY_ACTION, action);
+        Storage_GenerateUniqueName(kv, name);
+        EntityList_GetPosition(entityIndex, position);
+
+        kv.JumpToKey(name, CREATE_YES);
+        kv.SetNum(KEY_ACTION, action);
+        kv.SetVector(KEY_POSITION, position);
         kv.GoBack();
     }
 
@@ -40,35 +46,50 @@ void Storage_SaveEntities(KeyValues kv) {
 }
 
 void Storage_LoadEntities(KeyValues kv) {
-    EntityList_Clear();
+    if (FileExists(g_configPath)) {
+        kv.ImportFromFile(g_configPath);
+    }
 
     if (!kv.GotoFirstSubKey()) {
         return;
     }
 
-    char entityId[STORAGE_ENTITY_ID_MAX_LENGTH];
+    float position[3];
 
     do {
-        kv.GetSectionName(entityId, sizeof(entityId));
+        int action = kv.GetNum(KEY_ACTION);
 
-        int entity = StringToInt(entityId);
-        int action = kv.GetNum(STORAGE_KEY_ACTION);
+        kv.GetVector(KEY_POSITION, position);
 
-        EntityList_Add(entity, action);
+        UseCase_UpdateEntityFromFile(action, position);
     } while (kv.GotoNextKey());
 }
 
-void Storage_Apply(StorageOperation operation, bool isImport) {
-    KeyValues kv = new KeyValues("Entities");
-
-    if (FileExists(g_configPath) && isImport) {
-        kv.ImportFromFile(g_configPath);
-        kv.Rewind();
-    }
+void Storage_Apply(StorageOperation operation) {
+    KeyValues kv = new KeyValues("EntityManager");
 
     Call_StartFunction(INVALID_HANDLE, operation);
     Call_PushCell(kv);
     Call_Finish();
 
     delete kv;
+}
+
+static void Storage_GenerateUniqueName(KeyValues kv, char[] name) {
+    // "while (true)" gives warning 206
+    for (;;) {
+        Storage_GenerateName(name);
+
+        if (kv.JumpToKey(name)) {
+            kv.GoBack();
+        } else {
+            break;
+        }
+    }
+}
+
+static void Storage_GenerateName(char[] name) {
+    int randomInt = GetRandomInt(0, ~(1 << 31));
+
+    Format(name, ENTITY_NAME_SIZE, "%08X", randomInt);
 }

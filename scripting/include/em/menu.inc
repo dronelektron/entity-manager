@@ -3,7 +3,8 @@
 #endif
 #define _em_menu_included
 
-#define MENU_TEXT_MAX_SIZE (32 * 4)
+#define INFO_SIZE 16
+#define ITEM_SIZE (32 * 4)
 
 #define ENTITY_MANAGER "Entity manager"
 
@@ -14,5 +15,6 @@
 #define ITEM_ENTITIES_SHOW_PATH "Show path"
 #define ITEM_ENTITIES_SAVE "Save entities"
 #define ITEM_ENTITIES_LOAD "Load entities"
+#define ITEM_OBJECT "Object"
 
 #define ADMIN_MENU "adminmenu"

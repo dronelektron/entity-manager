@@ -4,32 +4,94 @@ void EntityList_Create() {
     g_entities = new ArrayList();
 }
 
-void EntityList_Destroy() {
-    delete g_entities;
-}
-
 void EntityList_Clear() {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        EntityList_RemoveItem(entityIndex);
+    }
+
     g_entities.Clear();
 }
 
-int EntityList_Size() {
-    return g_entities.Length / ENTITY_FIELDS_AMOUNT;
+int EntityList_EntitiesAmountWithAction() {
+    int amount = 0;
+
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        int action = EntityList_GetAction(entityIndex);
+
+        if (action != ENTITY_ACTION_NONE) {
+            amount++;
+        }
+    }
+
+    return amount;
 }
 
-int EntityList_GetId(int index) {
-    int offset = EntityList_GetOffset(index);
+int EntityList_Size() {
+    return g_entities.Length;
+}
 
-    return g_entities.Get(offset + ENTITY_FIELD_ID);
+void EntityList_Add(int entity, int action, const float position[3]) {
+    StringMap item = EntityList_CreateItem(entity, action, position);
+
+    g_entities.Push(item);
+}
+
+int EntityList_FindByEntity(int entity) {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        int tempEntity = EntityList_GetEntity(entityIndex);
+
+        if (entity == tempEntity) {
+            return entityIndex;
+        }
+    }
+
+    return ENTITY_NOT_FOUND;
+}
+
+int EntityList_FindByPosition(const float position[3]) {
+    float tempPosition[3];
+
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
+        EntityList_GetPosition(entityIndex, tempPosition);
+
+        if (GetVectorDistance(position, tempPosition, SQUARED_YES) <= ENTITY_POSITION_THRESHOLD) {
+            return entityIndex;
+        }
+    }
+
+    return ENTITY_NOT_FOUND;
+}
+
+int EntityList_GetEntity(int index) {
+    return EntityList_GetValue(index, KEY_ENTITY);
+}
+
+void EntityList_SetEntity(int index, int entity) {
+    EntityList_SetValue(index, KEY_ENTITY, entity);
 }
 
 int EntityList_GetAction(int index) {
-    int offset = EntityList_GetOffset(index);
-
-    return g_entities.Get(offset + ENTITY_FIELD_ACTION);
+    return EntityList_GetValue(index, KEY_ACTION);
 }
 
-bool EntityList_Contains(int entity) {
-    return EntityList_Find(entity) != ENTITY_NOT_FOUND;
+void EntityList_SetAction(int index, int action) {
+    EntityList_SetValue(index, KEY_ACTION, action);
+}
+
+void EntityList_GetPosition(int index, float position[3]) {
+    StringMap item = g_entities.Get(index);
+
+    item.GetArray(KEY_POSITION, position, sizeof(position));
+}
+
+void EntityList_SetActionByEntity(int entity, int action) {
+    int entityIndex = EntityList_FindByEntity(entity);
+
+    EntityList_SetAction(entityIndex, action);
+}
+
+bool EntityList_HasAction(int entity) {
+    return !EntityList_CheckAction(entity, ENTITY_ACTION_NONE);
 }
 
 bool EntityList_IsFrozen(int entity) {
@@ -40,44 +102,39 @@ bool EntityList_IsDeleted(int entity) {
     return EntityList_CheckAction(entity, ENTITY_ACTION_DELETE);
 }
 
-void EntityList_Add(int entity, int action) {
-    g_entities.Push(entity);
-    g_entities.Push(action);
+static StringMap EntityList_CreateItem(int entity, int action, const float position[3]) {
+    StringMap item = new StringMap();
+
+    item.SetValue(KEY_ENTITY, entity);
+    item.SetValue(KEY_ACTION, action);
+    item.SetArray(KEY_POSITION, position, sizeof(position));
+
+    return item;
 }
 
-void EntityList_Remove(int entity) {
-    int index = EntityList_Find(entity);
+static void EntityList_RemoveItem(int index) {
+    StringMap item = g_entities.Get(index);
 
-    if (index != ENTITY_NOT_FOUND) {
-        int offset = EntityList_GetOffset(index);
-
-        g_entities.Erase(offset + ENTITY_FIELD_ACTION);
-        g_entities.Erase(offset + ENTITY_FIELD_ID);
-    }
+    CloseHandle(item);
 }
 
-int EntityList_Find(int entity) {
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int tempEntity = EntityList_GetId(entityIndex);
+static bool EntityList_CheckAction(int entity, int action) {
+    int entityIndex = EntityList_FindByEntity(entity);
 
-        if (entity == tempEntity) {
-            return entityIndex;
-        }
-    }
-
-    return ENTITY_NOT_FOUND;
+    return EntityList_GetAction(entityIndex) == action;
 }
 
-int EntityList_GetOffset(int index) {
-    return index * ENTITY_FIELDS_AMOUNT;
+static int EntityList_GetValue(int index, const char[] key) {
+    StringMap item = g_entities.Get(index);
+    int value;
+
+    item.GetValue(key, value);
+
+    return value;
 }
 
-bool EntityList_CheckAction(int entity, int action) {
-    int index = EntityList_Find(entity);
+static void EntityList_SetValue(int index, const char[] key, int value) {
+    StringMap item = g_entities.Get(index);
 
-    if (index == ENTITY_NOT_FOUND) {
-        return false;
-    }
-
-    return EntityList_GetAction(index) == action;
+    item.SetValue(key, value);
 }

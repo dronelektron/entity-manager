@@ -3,10 +3,13 @@
 #endif
 #define _em_entity_list_included
 
-#define ENTITY_FIELD_ID 0
-#define ENTITY_FIELD_ACTION 1
+#define KEY_ENTITY "entity"
+#define KEY_ACTION "action"
+#define KEY_POSITION "position"
 
-#define ENTITY_FIELDS_AMOUNT 2
-
+#define ENTITY_ACTION_NONE -1
 #define ENTITY_ACTION_FREEZE 0
 #define ENTITY_ACTION_DELETE 1
+
+#define SQUARED_YES true
+#define ENTITY_POSITION_THRESHOLD 1.0

@@ -8,12 +8,7 @@
 #define PERMISSIONS_OTHER (FPERM_O_READ | FPERM_O_EXEC)
 #define PERMISSIONS (PERMISSIONS_USER | PERMISSIONS_GROUP | PERMISSIONS_OTHER)
 
-#define STORAGE_KEY_ACTION "action"
-#define STORAGE_ENTITY_ID_MAX_LENGTH (5 + 1)
-
+#define ENTITY_NAME_SIZE (8 + 1)
 #define CREATE_YES true
-
-#define IMPORT_YES true
-#define IMPORT_NO false
 
 typedef StorageOperation = function void (KeyValues kv);

@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <sdkhooks>
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
@@ -15,6 +16,7 @@
 #include "modules/console-variable.sp"
 #include "modules/entity-list.sp"
 #include "modules/entity.sp"
+#include "modules/event.sp"
 #include "modules/math.sp"
 #include "modules/menu.sp"
 #include "modules/message.sp"
@@ -26,7 +28,7 @@ public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "1.3.0",
+    version = "2.0.0",
     url = "https://github.com/dronelektron/entity-manager"
 };
 
@@ -35,18 +37,17 @@ public void OnPluginStart() {
     Command_Create();
     Variable_Create();
     AdminMenu_Create();
-    HookEvent("dod_round_start", Event_RoundStart);
+    Event_Create();
     LoadTranslations("entity-manager.phrases");
     AutoExecConfig(true, "entity-manager");
-}
-
-public void OnPluginEnd() {
-    EntityList_Destroy();
 }
 
 public void OnMapStart() {
     Visualizer_PrecacheTempEntityModels();
     Storage_BuildConfigPath();
+    EntityList_Clear();
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
     UseCase_LoadEntities(CONSOLE);
 }
 
@@ -58,8 +59,4 @@ public void OnLibraryRemoved(const char[] name) {
     if (strcmp(name, ADMIN_MENU) == 0) {
         AdminMenu_Destroy();
     }
-}
-
-public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
-    UseCase_ApplyActionToEntities();
 }
