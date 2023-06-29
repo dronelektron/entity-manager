@@ -24,11 +24,13 @@
 #include "modules/use-case.sp"
 #include "modules/visualizer.sp"
 
+#define AUTO_CREATE_YES true
+
 public Plugin myinfo = {
     name = "Entity manager",
     author = "Dron-elektron",
     description = "Allows you to perform various actions with objects at the beginning of the round",
-    version = "2.0.0",
+    version = "2.0.1",
     url = "https://github.com/dronelektron/entity-manager"
 };
 
@@ -39,7 +41,7 @@ public void OnPluginStart() {
     AdminMenu_Create();
     Event_Create();
     LoadTranslations("entity-manager.phrases");
-    AutoExecConfig(true, "entity-manager");
+    AutoExecConfig(AUTO_CREATE_YES, "entity-manager");
 }
 
 public void OnMapStart() {
@@ -49,6 +51,7 @@ public void OnMapStart() {
     UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
     UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
     UseCase_LoadEntities(CONSOLE);
+    UseCase_ApplyActionToEntities();
 }
 
 public void OnAdminMenuReady(Handle topMenu) {
