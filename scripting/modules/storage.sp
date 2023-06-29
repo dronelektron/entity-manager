@@ -16,7 +16,7 @@ void Storage_BuildConfigPath() {
 void Storage_SaveEntities(KeyValues kv) {
     DeleteFile(g_configPath);
 
-    int entitiesAmount = EntityList_Size();
+    int entitiesAmount = EntityList_EntitiesAmountWithAction();
 
     if (entitiesAmount == 0) {
         return;
@@ -25,7 +25,7 @@ void Storage_SaveEntities(KeyValues kv) {
     char name[ENTITY_NAME_SIZE];
     float position[3];
 
-    for (int entityIndex = 0; entityIndex < entitiesAmount; entityIndex++) {
+    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
         int action = EntityList_GetAction(entityIndex);
 
         if (action == ENTITY_ACTION_NONE) {
