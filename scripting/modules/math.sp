@@ -60,11 +60,50 @@ void Math_GetRotationMatrix(const float angles[3], float rotationMat[3][3]) {
 }
 
 void Math_MultiplyMatrixByVector(const float mat[3][3], const float vec[3], float result[3]) {
+    float temp[3];
+
     for (int i = 0; i < 3; i++) {
-        result[i] = 0.0;
+        temp[i] = 0.0;
 
         for (int j = 0; j < 3; j++) {
-            result[i] += mat[i][j] * vec[j];
+            temp[i] += mat[i][j] * vec[j];
         }
     }
+
+    result = temp;
+}
+
+void Math_GetVertices(const float start[3], const float end[3], float vertices[8][3]) {
+    float min[3];
+    float max[3];
+
+    min[X] = Math_Min(start[X], end[X]);
+    min[Y] = Math_Min(start[Y], end[Y]);
+    min[Z] = Math_Min(start[Z], end[Z]);
+    max[X] = Math_Max(start[X], end[X]);
+    max[Y] = Math_Max(start[Y], end[Y]);
+    max[Z] = Math_Max(start[Z], end[Z]);
+
+    Math_FillVector(vertices[LEFT_FRONT_BOTTOM], min[X], max[Y], min[Z]);
+    Math_FillVector(vertices[LEFT_FRONT_TOP], min[X], max[Y], max[Z]);
+    Math_FillVector(vertices[LEFT_REAR_BOTTOM], min[X], min[Y], min[Z]);
+    Math_FillVector(vertices[LEFT_REAR_TOP], min[X], min[Y], max[Z]);
+    Math_FillVector(vertices[RIGHT_FRONT_BOTTOM], max[X], max[Y], min[Z]);
+    Math_FillVector(vertices[RIGHT_FRONT_TOP], max[X], max[Y], max[Z]);
+    Math_FillVector(vertices[RIGHT_REAR_BOTTOM], max[X], min[Y], min[Z]);
+    Math_FillVector(vertices[RIGHT_REAR_TOP], max[X], min[Y], max[Z]);
+}
+
+void Math_FillVector(float vector[3], float x, float y, float z) {
+    vector[X] = x;
+    vector[Y] = y;
+    vector[Z] = z;
+}
+
+float Math_Min(float a, float b) {
+    return a < b ? a : b;
+}
+
+float Math_Max(float a, float b) {
+    return a > b ? a : b;
 }

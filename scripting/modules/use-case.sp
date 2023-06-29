@@ -82,19 +82,49 @@ void UseCase_RestoreEntity(int client) {
     Message_EntityRestored(client, entity);
 }
 
-void UseCase_DrawPathToEntity(int client, int entity) {
+void UseCase_ShowPathToEntity(int client, int entity) {
     if (EntityList_FindByEntity(entity) == ENTITY_NOT_FOUND || !EntityList_HasAction(entity)) {
         MessageReply_EntityNotFound(client);
 
         return;
     }
 
+    UseCase_DrawBeam(client, entity);
+    UseCase_DrawBounds(client, entity);
+}
+
+void UseCase_DrawBeam(int client, int entity) {
     float clientMiddle[3];
     float entityMiddle[3];
 
     Math_GetMiddle(client, clientMiddle, BOUNDS_ROTATE_NO);
     Math_GetMiddle(entity, entityMiddle, BOUNDS_ROTATE_YES);
     Visualizer_DrawBeam(client, clientMiddle, entityMiddle);
+}
+
+void UseCase_DrawBounds(int client, int entity) {
+    float entityOrigin[3];
+    float minBounds[3];
+    float maxBounds[3];
+    float degAngles[3];
+    float radAngles[3];
+    float vertices[8][3];
+    float rotationMatrix[3][3];
+
+    Entity_GetPosition(entity, entityOrigin);
+    Entity_GetMinBounds(entity, minBounds);
+    Entity_GetMaxBounds(entity, maxBounds);
+    Entity_GetAngles(entity, degAngles);
+    Math_DegreesToRadiansVector(degAngles, radAngles);
+    Math_GetRotationMatrix(radAngles, rotationMatrix);
+    Math_GetVertices(minBounds, maxBounds, vertices);
+
+    for (int i = 0; i < sizeof(vertices); i++) {
+        Math_MultiplyMatrixByVector(rotationMatrix, vertices[i], vertices[i]);
+        AddVectors(vertices[i], entityOrigin, vertices[i]);
+    }
+
+    Visualizer_DrawBounds(client, vertices);
 }
 
 void UseCase_SaveEntities(int client) {

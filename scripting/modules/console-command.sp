@@ -41,7 +41,7 @@ public Action Command_ShowPath(int client, int args) {
 
     int entity = GetCmdArgInt(1);
 
-    UseCase_DrawPathToEntity(client, entity);
+    UseCase_ShowPathToEntity(client, entity);
 
     return Plugin_Handled;
 }

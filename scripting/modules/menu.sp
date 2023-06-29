@@ -131,7 +131,7 @@ public int MenuHandler_ShowPath(Menu menu, MenuAction action, int param1, int pa
 
         int entity = StringToInt(info);
 
-        UseCase_DrawPathToEntity(param1, entity);
+        UseCase_ShowPathToEntity(param1, entity);
         Menu_ShowPath(param1, menu.Selection);
     } else if (action == MenuAction_Cancel) {
         if (param2 == MenuCancel_ExitBack && g_adminMenu != null) {

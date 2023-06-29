@@ -27,3 +27,18 @@ void Visualizer_DrawBeam(int client, const float start[3], const float end[3]) {
 
     TE_SendToClient(client);
 }
+
+void Visualizer_DrawBounds(int client, const float vertices[8][3]) {
+    Visualizer_DrawBeam(client, vertices[LEFT_REAR_BOTTOM], vertices[RIGHT_REAR_BOTTOM]);
+    Visualizer_DrawBeam(client, vertices[LEFT_REAR_TOP], vertices[RIGHT_REAR_TOP]);
+    Visualizer_DrawBeam(client, vertices[LEFT_FRONT_BOTTOM], vertices[RIGHT_FRONT_BOTTOM]);
+    Visualizer_DrawBeam(client, vertices[LEFT_FRONT_TOP], vertices[RIGHT_FRONT_TOP]);
+    Visualizer_DrawBeam(client, vertices[LEFT_REAR_BOTTOM], vertices[LEFT_FRONT_BOTTOM]);
+    Visualizer_DrawBeam(client, vertices[LEFT_REAR_TOP], vertices[LEFT_FRONT_TOP]);
+    Visualizer_DrawBeam(client, vertices[RIGHT_REAR_BOTTOM], vertices[RIGHT_FRONT_BOTTOM]);
+    Visualizer_DrawBeam(client, vertices[RIGHT_REAR_TOP], vertices[RIGHT_FRONT_TOP]);
+    Visualizer_DrawBeam(client, vertices[LEFT_REAR_BOTTOM], vertices[LEFT_REAR_TOP]);
+    Visualizer_DrawBeam(client, vertices[LEFT_FRONT_BOTTOM], vertices[LEFT_FRONT_TOP]);
+    Visualizer_DrawBeam(client, vertices[RIGHT_REAR_BOTTOM], vertices[RIGHT_REAR_TOP]);
+    Visualizer_DrawBeam(client, vertices[RIGHT_FRONT_BOTTOM], vertices[RIGHT_FRONT_TOP]);
+}
