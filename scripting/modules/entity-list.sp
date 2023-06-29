@@ -38,10 +38,7 @@ void EntityList_Add(int entity, int action, const float position[3]) {
 
 int EntityList_FindByEntity(int entity) {
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        StringMap item = g_entities.Get(entityIndex);
-        int tempEntity = ENTITY_NOT_FOUND;
-
-        item.GetValue(KEY_ENTITY, tempEntity);
+        int tempEntity = EntityList_GetEntity(entityIndex);
 
         if (entity == tempEntity) {
             return entityIndex;
@@ -55,9 +52,7 @@ int EntityList_FindByPosition(const float position[3]) {
     float tempPosition[3];
 
     for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        StringMap item = g_entities.Get(entityIndex);
-
-        item.GetArray(KEY_POSITION, tempPosition, sizeof(tempPosition));
+        EntityList_GetPosition(entityIndex, tempPosition);
 
         if (GetVectorDistance(position, tempPosition, SQUARED_YES) <= ENTITY_POSITION_THRESHOLD) {
             return entityIndex;
@@ -68,19 +63,19 @@ int EntityList_FindByPosition(const float position[3]) {
 }
 
 int EntityList_GetEntity(int index) {
-    return EntityList_GetField(index, KEY_ENTITY);
+    return EntityList_GetValue(index, KEY_ENTITY);
 }
 
 void EntityList_SetEntity(int index, int entity) {
-    EntityList_SetField(index, KEY_ENTITY, entity);
+    EntityList_SetValue(index, KEY_ENTITY, entity);
 }
 
 int EntityList_GetAction(int index) {
-    return EntityList_GetField(index, KEY_ACTION);
+    return EntityList_GetValue(index, KEY_ACTION);
 }
 
 void EntityList_SetAction(int index, int action) {
-    EntityList_SetField(index, KEY_ACTION, action);
+    EntityList_SetValue(index, KEY_ACTION, action);
 }
 
 void EntityList_GetPosition(int index, float position[3]) {
@@ -129,7 +124,7 @@ static bool EntityList_CheckAction(int entity, int action) {
     return EntityList_GetAction(entityIndex) == action;
 }
 
-static int EntityList_GetField(int index, const char[] key) {
+static int EntityList_GetValue(int index, const char[] key) {
     StringMap item = g_entities.Get(index);
     int value;
 
@@ -138,7 +133,7 @@ static int EntityList_GetField(int index, const char[] key) {
     return value;
 }
 
-static void EntityList_SetField(int index, const char[] key, int value) {
+static void EntityList_SetValue(int index, const char[] key, int value) {
     StringMap item = g_entities.Get(index);
 
     item.SetValue(key, value);
