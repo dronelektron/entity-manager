@@ -49,6 +49,7 @@ public void OnMapStart() {
     UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
     UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
     UseCase_LoadEntities(CONSOLE);
+    UseCase_ApplyActionToEntities();
 }
 
 public void OnAdminMenuReady(Handle topMenu) {
