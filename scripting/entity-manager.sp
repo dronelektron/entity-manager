@@ -46,6 +46,8 @@ public void OnMapStart() {
     Visualizer_PrecacheTempEntityModels();
     Storage_BuildConfigPath();
     EntityList_Clear();
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
+    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
     UseCase_LoadEntities(CONSOLE);
 }
 
