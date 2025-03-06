@@ -1,0 +1,107 @@
+"Phrases"
+{
+    "Entity not found"
+    {
+        "ru"    "Объект не найден"
+    }
+
+    "Entity not physical"
+    {
+        "ru"    "Не физический объект"
+    }
+
+    "Entity without HammerID"
+    {
+        "ru"    "У объекта нет HammerID"
+    }
+
+    "Entity with action"
+    {
+        "ru"    "У объекта уже есть действие"
+    }
+
+    "Entity without action"
+    {
+        "ru"    "У объекта нет такого действия"
+    }
+
+    "Entity list empty"
+    {
+        "ru"    "Список объектов пустой"
+    }
+
+    "Entity frozen"
+    {
+        "ru"    "Объект {1} заморожен"
+    }
+
+    "Entity unfrozen"
+    {
+        "ru"    "Объект {1} разморожен"
+    }
+
+    "Entity deleted"
+    {
+        "ru"    "Объект {1} удален"
+    }
+
+    "Entity restored"
+    {
+        "ru"    "Объект {1} восстановлен"
+    }
+
+    "Entities saved"
+    {
+        "ru"    "Объекты сохранены"
+    }
+
+    "Entities loaded"
+    {
+        "ru"    "Объекты загружены"
+    }
+
+    "Entity manager"
+    {
+        "ru"    "Управление объектами"
+    }
+
+    "Freeze entity"
+    {
+        "ru"    "Заморозить объект"
+    }
+
+    "Unfreeze entity"
+    {
+        "ru"    "Разморозить объект"
+    }
+
+    "Delete entity"
+    {
+        "ru"    "Удалить объект"
+    }
+
+    "Restore entity"
+    {
+        "ru"    "Восстановить объект"
+    }
+
+    "Show path"
+    {
+        "ru"    "Показать путь до объекта"
+    }
+
+    "Save entities"
+    {
+        "ru"    "Сохранить объекты"
+    }
+
+    "Load entities"
+    {
+        "ru"    "Загрузить объекты"
+    }
+
+    "Object"
+    {
+        "ru"    "Объект {1}"
+    }
+}

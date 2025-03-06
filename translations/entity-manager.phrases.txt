@@ -1,0 +1,112 @@
+"Phrases"
+{
+    "Entity not found"
+    {
+        "en"    "The entity is not found"
+    }
+
+    "Entity not physical"
+    {
+        "en"    "The entity is not physical"
+    }
+
+    "Entity without HammerID"
+    {
+        "en"    "The entity does not have a HammerID"
+    }
+
+    "Entity with action"
+    {
+        "en"    "The entity already has an action"
+    }
+
+    "Entity without action"
+    {
+        "en"    "The entity does not have such an action"
+    }
+
+    "Entity list empty"
+    {
+        "en"    "The list of entities is empty"
+    }
+
+    "Entity frozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "The entity {1} is frozen"
+    }
+
+    "Entity unfrozen"
+    {
+        "#format"   "{1:d}"
+        "en"    "The entity {1} is unfrozen"
+    }
+
+    "Entity deleted"
+    {
+        "#format"   "{1:d}"
+        "en"    "The entity {1} is deleted"
+    }
+
+    "Entity restored"
+    {
+        "#format"   "{1:d}"
+        "en"    "The entity {1} is restored"
+    }
+
+    "Entities saved"
+    {
+        "en"    "Entities are saved"
+    }
+
+    "Entities loaded"
+    {
+        "en"    "Entities are loaded"
+    }
+
+    "Entity manager"
+    {
+        "en"    "Entity manager"
+    }
+
+    "Freeze entity"
+    {
+        "en"    "Freeze entity"
+    }
+
+    "Unfreeze entity"
+    {
+        "en"    "Unfreeze entity"
+    }
+
+    "Delete entity"
+    {
+        "en"    "Delete entity"
+    }
+
+    "Restore entity"
+    {
+        "en"    "Restore entity"
+    }
+
+    "Show path"
+    {
+        "en"    "Show path to entity"
+    }
+
+    "Save entities"
+    {
+        "en"    "Save entities"
+    }
+
+    "Load entities"
+    {
+        "en"    "Load entities"
+    }
+
+    "Object"
+    {
+        "#format"   "{1:d}"
+        "en"    "Object {1}"
+    }
+}
