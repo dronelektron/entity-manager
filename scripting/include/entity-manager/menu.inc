@@ -1,10 +1,10 @@
-#if defined _em_menu_included
+#if defined _entity_manager_menu_included
  #endinput
 #endif
-#define _em_menu_included
+#define _entity_manager_menu_included
 
-#define INFO_SIZE 16
-#define ITEM_SIZE (32 * 4)
+#define INFO_SIZE 128
+#define ITEM_SIZE 128
 
 #define ENTITY_MANAGER "Entity manager"
 
@@ -12,9 +12,6 @@
 #define ITEM_ENTITY_UNFREEZE "Unfreeze entity"
 #define ITEM_ENTITY_DELETE "Delete entity"
 #define ITEM_ENTITY_RESTORE "Restore entity"
-#define ITEM_ENTITIES_SHOW_PATH "Show path"
+#define ITEM_ENTITY_SHOW_PATH "Show path"
 #define ITEM_ENTITIES_SAVE "Save entities"
 #define ITEM_ENTITIES_LOAD "Load entities"
-#define ITEM_OBJECT "Object"
-
-#define ADMIN_MENU "adminmenu"

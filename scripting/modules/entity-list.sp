@@ -1,140 +1,119 @@
-static ArrayList g_entities = null;
+static ArrayList g_items;
 
 void EntityList_Create() {
-    g_entities = new ArrayList();
+    g_items = new ArrayList();
 }
 
 void EntityList_Clear() {
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        EntityList_RemoveItem(entityIndex);
+    for (int i = 0; i < g_items.Length; i++) {
+        ClearItem(i);
     }
 
-    g_entities.Clear();
-}
-
-int EntityList_EntitiesAmountWithAction() {
-    int amount = 0;
-
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int action = EntityList_GetAction(entityIndex);
-
-        if (action != ENTITY_ACTION_NONE) {
-            amount++;
-        }
-    }
-
-    return amount;
+    g_items.Clear();
 }
 
 int EntityList_Size() {
-    return g_entities.Length;
+    return g_items.Length;
 }
 
-void EntityList_Add(int entity, int action, const float position[3]) {
-    StringMap item = EntityList_CreateItem(entity, action, position);
+void EntityList_Add(int entity, int hammerId, int action) {
+    StringMap item = CreateItem(entity, hammerId, action);
 
-    g_entities.Push(item);
+    g_items.Push(item);
 }
 
-int EntityList_FindByEntity(int entity) {
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int tempEntity = EntityList_GetEntity(entityIndex);
+int EntityList_GetHammerId(int index) {
+    StringMap item = g_items.Get(index);
 
-        if (entity == tempEntity) {
-            return entityIndex;
-        }
-    }
-
-    return ENTITY_NOT_FOUND;
-}
-
-int EntityList_FindByPosition(const float position[3]) {
-    float tempPosition[3];
-
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        EntityList_GetPosition(entityIndex, tempPosition);
-
-        if (GetVectorDistance(position, tempPosition, SQUARED_YES) <= ENTITY_POSITION_THRESHOLD) {
-            return entityIndex;
-        }
-    }
-
-    return ENTITY_NOT_FOUND;
-}
-
-int EntityList_GetEntity(int index) {
-    return EntityList_GetValue(index, KEY_ENTITY);
-}
-
-void EntityList_SetEntity(int index, int entity) {
-    EntityList_SetValue(index, KEY_ENTITY, entity);
+    return GetValue(item, KEY_HAMMER_ID, INVALID_HAMMER_ID);
 }
 
 int EntityList_GetAction(int index) {
-    return EntityList_GetValue(index, KEY_ACTION);
+    StringMap item = g_items.Get(index);
+
+    return GetValue(item, KEY_ACTION, INVALID_INDEX);
 }
 
-void EntityList_SetAction(int index, int action) {
-    EntityList_SetValue(index, KEY_ACTION, action);
+void EntityList_RemoveByHammerId(int hammerId) {
+    int index = FindByHammerId(hammerId);
+
+    if (index > INVALID_INDEX) {
+        ClearItem(index);
+
+        g_items.Erase(index);
+    }
 }
 
-void EntityList_GetPosition(int index, float position[3]) {
-    StringMap item = g_entities.Get(index);
+int EntityList_GetEntityByHammerId(int hammerId) {
+    int index = FindByHammerId(hammerId);
 
-    item.GetArray(KEY_POSITION, position, sizeof(position));
+    if (index == INVALID_INDEX) {
+        return INVALID_INDEX;
+    }
+
+    return GetEntity(index);
 }
 
-void EntityList_SetActionByEntity(int entity, int action) {
-    int entityIndex = EntityList_FindByEntity(entity);
+void EntityList_SetEntityByHammerId(int hammerId, int entity) {
+    int index = FindByHammerId(hammerId);
 
-    EntityList_SetAction(entityIndex, action);
+    if (index > INVALID_INDEX) {
+        SetEntity(index, entity);
+    }
 }
 
-bool EntityList_HasAction(int entity) {
-    return !EntityList_CheckAction(entity, ENTITY_ACTION_NONE);
+int EntityList_GetActionByHammerId(int hammerId) {
+    int index = FindByHammerId(hammerId);
+
+    if (index == INVALID_INDEX) {
+        return INVALID_INDEX;
+    }
+
+    return EntityList_GetAction(index);
 }
 
-bool EntityList_IsFrozen(int entity) {
-    return EntityList_CheckAction(entity, ENTITY_ACTION_FREEZE);
-}
-
-bool EntityList_IsDeleted(int entity) {
-    return EntityList_CheckAction(entity, ENTITY_ACTION_DELETE);
-}
-
-static StringMap EntityList_CreateItem(int entity, int action, const float position[3]) {
+static StringMap CreateItem(int entity, int hammerId, int action) {
     StringMap item = new StringMap();
 
     item.SetValue(KEY_ENTITY, entity);
+    item.SetValue(KEY_HAMMER_ID, hammerId);
     item.SetValue(KEY_ACTION, action);
-    item.SetArray(KEY_POSITION, position, sizeof(position));
 
     return item;
 }
 
-static void EntityList_RemoveItem(int index) {
-    StringMap item = g_entities.Get(index);
+static void ClearItem(int index) {
+    StringMap item = g_items.Get(index);
 
-    CloseHandle(item);
+    delete item;
 }
 
-static bool EntityList_CheckAction(int entity, int action) {
-    int entityIndex = EntityList_FindByEntity(entity);
+static int FindByHammerId(int hammerId) {
+    for (int i = 0; i < g_items.Length; i++) {
+        if (EntityList_GetHammerId(i) == hammerId) {
+            return i;
+        }
+    }
 
-    return EntityList_GetAction(entityIndex) == action;
+    return INVALID_INDEX;
 }
 
-static int EntityList_GetValue(int index, const char[] key) {
-    StringMap item = g_entities.Get(index);
-    int value;
+static int GetEntity(int index) {
+    StringMap item = g_items.Get(index);
+
+    return GetValue(item, KEY_ENTITY, INVALID_INDEX);
+}
+
+static void SetEntity(int index, int entity) {
+    StringMap item = g_items.Get(index);
+
+    item.SetValue(KEY_ENTITY, entity);
+}
+
+static any GetValue(StringMap item, const char[] key, any defaultValue) {
+    any value = defaultValue;
 
     item.GetValue(key, value);
 
     return value;
-}
-
-static void EntityList_SetValue(int index, const char[] key, int value) {
-    StringMap item = g_entities.Get(index);
-
-    item.SetValue(key, value);
 }

@@ -1,9 +1,7 @@
 void Event_Create() {
-    HookEvent("dod_round_start", Event_RoundStart);
+    HookEvent("dod_round_start", OnRoundStart);
 }
 
-public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
-    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS);
-    UseCase_UpdateEntitiesFromMap(PROP_PHYSICS_MULTIPLAYER);
-    UseCase_ApplyActionToEntities();
+static void OnRoundStart(Event event, const char[] name, bool dontBroadcast) {
+    UseCase_EntitiesAction_Toggle(ENABLED_YES);
 }

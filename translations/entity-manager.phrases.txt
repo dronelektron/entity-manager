@@ -2,71 +2,66 @@
 {
     "Entity not found"
     {
-        "en"    "Entity not found"
+        "en"    "The entity is not found"
     }
 
-    "Entity already has an action"
+    "Entity not physical"
+    {
+        "en"    "The entity is not physical"
+    }
+
+    "Entity without HammerID"
+    {
+        "en"    "The entity does not have a HammerID"
+    }
+
+    "Entity with action"
+    {
+        "en"    "The entity already has an action"
+    }
+
+    "Entity without action"
+    {
+        "en"    "The entity does not have such an action"
+    }
+
+    "Entity list empty"
+    {
+        "en"    "The list of entities is empty"
+    }
+
+    "Entity frozen"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} already has an action"
+        "en"    "The entity {1} is frozen"
     }
 
-    "Entity not frozen"
+    "Entity unfrozen"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} not frozen"
+        "en"    "The entity {1} is unfrozen"
     }
 
-    "Entity not deleted"
+    "Entity deleted"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} not deleted"
+        "en"    "The entity {1} is deleted"
     }
 
-    "Entity has been frozen"
+    "Entity restored"
     {
         "#format"   "{1:d}"
-        "en"    "Entity {1} has been frozen"
-    }
-
-    "Entity has been unfrozen"
-    {
-        "#format"   "{1:d}"
-        "en"    "Entity {1} has been unfrozen"
-    }
-
-    "Entity has been deleted"
-    {
-        "#format"   "{1:d}"
-        "en"    "Entity {1} deleted"
-    }
-
-    "Entity has been restored"
-    {
-        "#format"   "{1:d}"
-        "en"    "Entity {1} restored"
-    }
-
-    "List of entities cleared"
-    {
-        "en"    "List of entities cleared"
+        "en"    "The entity {1} is restored"
     }
 
     "Entities saved"
     {
-        "#format"   "{1:d}"
-        "en"    "Saved {1} entities"
-    }
-
-    "No entities for loading"
-    {
-        "en"    "No entities for loading"
+        "en"    "Entities are saved"
     }
 
     "Entities loaded"
     {
-        "#format"   "{1:d}"
-        "en"    "Loaded {1} entities"
+        "en"    "Entities are loaded"
     }
 
     "Entity manager"
@@ -96,7 +91,7 @@
 
     "Show path"
     {
-        "en"    "Show path to entities"
+        "en"    "Show path to entity"
     }
 
     "Save entities"

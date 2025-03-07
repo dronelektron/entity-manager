@@ -1,58 +1,65 @@
 void Command_Create() {
-    RegAdminCmd("sm_entitymanager_freeze", Command_Freeze, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_unfreeze", Command_Unfreeze, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_delete", Command_Delete, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_restore", Command_Restore, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_show_path", Command_ShowPath, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_save", Command_Save, ADMFLAG_GENERIC);
-    RegAdminCmd("sm_entitymanager_load", Command_Load, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager", OnEntityManager, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_freeze", OnFreezeEntity, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_unfreeze", OnUnfreezeEntity, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_delete", OnDeleteEntity, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_restore", OnRestoreEntity, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_show_path", OnShowPath, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_save", OnSaveEntities, ADMFLAG_GENERIC);
+    RegAdminCmd("sm_entitymanager_load", OnLoadEntities, ADMFLAG_GENERIC);
 }
 
-public Action Command_Freeze(int client, int args) {
+static Action OnEntityManager(int client, int args) {
+    Menu_EntityManager(client);
+
+    return Plugin_Handled;
+}
+
+static Action OnFreezeEntity(int client, int args) {
     UseCase_FreezeEntity(client);
 
     return Plugin_Handled;
 }
 
-public Action Command_Unfreeze(int client, int args) {
+static Action OnUnfreezeEntity(int client, int args) {
     UseCase_UnfreezeEntity(client);
 
     return Plugin_Handled;
 }
 
-public Action Command_Delete(int client, int args) {
+static Action OnDeleteEntity(int client, int args) {
     UseCase_DeleteEntity(client);
 
     return Plugin_Handled;
 }
 
-public Action Command_Restore(int client, int args) {
+static Action OnRestoreEntity(int client, int args) {
     UseCase_RestoreEntity(client);
 
     return Plugin_Handled;
 }
 
-public Action Command_ShowPath(int client, int args) {
+static Action OnShowPath(int client, int args) {
     if (args < 1) {
         Message_ShowPathUsage(client);
 
         return Plugin_Handled;
     }
 
-    int entity = GetCmdArgInt(1);
+    int hammerId = GetCmdArgInt(1);
 
-    UseCase_ShowPathToEntity(client, entity);
+    UseCase_ShowPathToEntity(client, hammerId);
 
     return Plugin_Handled;
 }
 
-public Action Command_Save(int client, int args) {
+static Action OnSaveEntities(int client, int args) {
     UseCase_SaveEntities(client);
 
     return Plugin_Handled;
 }
 
-public Action Command_Load(int client, int args) {
+static Action OnLoadEntities(int client, int args) {
     UseCase_LoadEntities(client);
 
     return Plugin_Handled;

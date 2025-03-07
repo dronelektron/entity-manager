@@ -10,34 +10,38 @@ void Storage_BuildConfigPath() {
     char mapName[PLATFORM_MAX_PATH];
 
     GetCurrentMap(mapName, sizeof(mapName));
-    Format(g_configPath, sizeof(g_configPath), "%s/%s.txt", g_configPath, mapName);
+    FormatEx(g_configPath, sizeof(g_configPath), "%s/%s.txt", g_configPath, mapName);
+}
+
+void Storage_Apply(StorageOperation operation) {
+    KeyValues kv = new KeyValues("EntityManager");
+
+    Call_StartFunction(CURRENT_PLUGIN, operation);
+    Call_PushCell(kv);
+    Call_Finish();
+
+    delete kv;
 }
 
 void Storage_SaveEntities(KeyValues kv) {
     DeleteFile(g_configPath);
 
-    int entitiesAmount = EntityList_EntitiesAmountWithAction();
+    int entitiesAmount = EntityList_Size();
 
     if (entitiesAmount == 0) {
         return;
     }
 
-    char name[ENTITY_NAME_SIZE];
-    float position[3];
+    char sectionName[HAMMER_ID_SIZE];
 
-    for (int entityIndex = 0; entityIndex < EntityList_Size(); entityIndex++) {
-        int action = EntityList_GetAction(entityIndex);
+    for (int i = 0; i < entitiesAmount; i++) {
+        int hammerId = EntityList_GetHammerId(i);
+        int action = EntityList_GetAction(i);
 
-        if (action == ENTITY_ACTION_NONE) {
-            continue;
-        }
+        IntToString(hammerId, sectionName, sizeof(sectionName));
 
-        Storage_GenerateUniqueName(kv, name);
-        EntityList_GetPosition(entityIndex, position);
-
-        kv.JumpToKey(name, CREATE_YES);
+        kv.JumpToKey(sectionName, CREATE_YES);
         kv.SetNum(KEY_ACTION, action);
-        kv.SetVector(KEY_POSITION, position);
         kv.GoBack();
     }
 
@@ -46,6 +50,8 @@ void Storage_SaveEntities(KeyValues kv) {
 }
 
 void Storage_LoadEntities(KeyValues kv) {
+    EntityList_Clear();
+
     if (FileExists(g_configPath)) {
         kv.ImportFromFile(g_configPath);
     }
@@ -54,42 +60,14 @@ void Storage_LoadEntities(KeyValues kv) {
         return;
     }
 
-    float position[3];
+    char sectionName[HAMMER_ID_SIZE];
 
     do {
+        kv.GetSectionName(sectionName, sizeof(sectionName));
+
+        int hammerId = StringToInt(sectionName);
         int action = kv.GetNum(KEY_ACTION);
 
-        kv.GetVector(KEY_POSITION, position);
-
-        UseCase_UpdateEntityFromFile(action, position);
+        EntityList_Add(INVALID_INDEX, hammerId, action);
     } while (kv.GotoNextKey());
-}
-
-void Storage_Apply(StorageOperation operation) {
-    KeyValues kv = new KeyValues("EntityManager");
-
-    Call_StartFunction(INVALID_HANDLE, operation);
-    Call_PushCell(kv);
-    Call_Finish();
-
-    delete kv;
-}
-
-static void Storage_GenerateUniqueName(KeyValues kv, char[] name) {
-    // "while (true)" gives warning 206
-    for (;;) {
-        Storage_GenerateName(name);
-
-        if (kv.JumpToKey(name)) {
-            kv.GoBack();
-        } else {
-            break;
-        }
-    }
-}
-
-static void Storage_GenerateName(char[] name) {
-    int randomInt = GetRandomInt(0, ~(1 << 31));
-
-    Format(name, ENTITY_NAME_SIZE, "%08X", randomInt);
 }

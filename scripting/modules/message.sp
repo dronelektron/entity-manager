@@ -1,68 +1,65 @@
-void Message_ShowPathUsage(int client) {
-    ReplyToCommand(client, "%s%s", PREFIX, "Usage: sm_entitymanager_show_path <entity>");
-}
-
-void MessageReply_EntityNotFound(int client) {
+void Message_EntityNotFound(int client) {
     ReplyToCommand(client, "%s%t", PREFIX, "Entity not found");
 }
 
-void MessageReply_EntityAlreadyHasAction(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity already has an action", entity);
+void Message_EntityNotPhysical(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity not physical");
 }
 
-void MessageReply_EntityNotFrozen(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity not frozen", entity);
+void Message_EntityWithoutHammerId(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity without HammerID");
 }
 
-void MessageReply_EntityNotDeleted(int client, int entity) {
-    ReplyToCommand(client, "%s%t", PREFIX, "Entity not deleted", entity);
+void Message_EntityWithAction(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity with action");
 }
 
-void Message_EntityFrozen(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity has been frozen", entity);
-    LogMessage("\"%L\" froze entity %d", client, entity);
+void Message_EntityWithoutAction(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity without action");
 }
 
-void Message_EntityUnfrozen(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity has been unfrozen", entity);
-    LogMessage("\"%L\" unfroze entity %d", client, entity);
+void Message_EntityListEmpty(int client) {
+    ReplyToCommand(client, "%s%t", PREFIX, "Entity list empty");
 }
 
-void Message_EntityDeleted(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity has been deleted", entity);
-    LogMessage("\"%L\" deleted entity %d", client, entity);
+void Message_EntityFrozen(int client, int hammerId) {
+    ShowActivity2(client, PREFIX, "%t", "Entity frozen", hammerId);
+    LogMessage("\"%L\" froze the entity %d", client, hammerId);
 }
 
-void Message_EntityRestored(int client, int entity) {
-    ShowActivity2(client, PREFIX, "%t", "Entity has been restored", entity);
-    LogMessage("\"%L\" restored entity %d", client, entity);
+void Message_EntityUnfrozen(int client, int hammerId) {
+    ShowActivity2(client, PREFIX, "%t", "Entity unfrozen", hammerId);
+    LogMessage("\"%L\" unfroze the entity %d", client, hammerId);
 }
 
-void Message_ListOfEntitiesCleared(int client) {
-    ShowActivity2(client, PREFIX, "%t", "List of entities cleared");
-    LogMessage("\"%L\" cleared the list of entities", client);
+void Message_EntityDeleted(int client, int hammerId) {
+    ShowActivity2(client, PREFIX, "%t", "Entity deleted", hammerId);
+    LogMessage("\"%L\" deleted the entity %d", client, hammerId);
 }
 
-void Message_EntitiesSaved(int client, int entitiesAmount) {
-    ShowActivity2(client, PREFIX, "%t", "Entities saved", entitiesAmount);
-    LogMessage("\"%L\" saved %d entities", client, entitiesAmount);
+void Message_EntityRestored(int client, int hammerId) {
+    ShowActivity2(client, PREFIX, "%t", "Entity restored", hammerId);
+    LogMessage("\"%L\" restored the entity %d", client, hammerId);
 }
 
-void Message_NoEntitiesForLoading(int client) {
-    if (client != CONSOLE) {
-        ReplyToCommand(client, "%s%t", PREFIX, "No entities for loading");
-    }
+void Message_ShowPathUsage(int client) {
+    ReplyToCommand(client, "%s%s", PREFIX, "Usage: sm_entitymanager_show_path <hammerid>");
+}
 
+void Message_EntitiesSaved(int client) {
     if (client == CONSOLE) {
-        LogMessage("No entities for this map");
-    }
-}
-
-void Message_EntitiesLoaded(int client, int entitiesAmount) {
-    if (client == CONSOLE) {
-        LogMessage("Loaded %d entities", entitiesAmount);
+        LogMessage("Entities are saved");
     } else {
-        ShowActivity2(client, PREFIX, "%t", "Entities loaded", entitiesAmount);
-        LogMessage("\"%L\" loaded %d entities", client, entitiesAmount);
+        ShowActivity2(client, PREFIX, "%t", "Entities saved");
+        LogMessage("\"%L\" saved the entities", client);
+    }
+}
+
+void Message_EntitiesLoaded(int client) {
+    if (client == CONSOLE) {
+        LogMessage("Entities are loaded");
+    } else {
+        ShowActivity2(client, PREFIX, "%t", "Entities loaded");
+        LogMessage("\"%L\" loaded the entities", client);
     }
 }

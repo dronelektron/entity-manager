@@ -1,97 +1,75 @@
-void Entity_Freeze(int entity) {
-    AcceptEntityInput(entity, "DisableMotion");
-}
-
-void Entity_Unfreeze(int entity) {
-    AcceptEntityInput(entity, "EnableMotion");
-}
-
-void Entity_Delete(int entity) {
-    Entity_Freeze(entity);
-    Entity_SetVisibility(entity, ENTITY_VISIBLE_NO);
-}
-
-void Entity_Restore(int entity) {
-    Entity_SetVisibility(entity, ENTITY_VISIBLE_YES);
-    Entity_Unfreeze(entity);
-}
-
-static void Entity_SetVisibility(int entity, bool isVisible) {
-    int effects = Entity_GetEffects(entity);
-
-    if (isVisible) {
-        Entity_RemoveEffect(effects, EFFECT_FLAG_NO_DRAW);
-        Entity_SetSolidType(entity, SOLID_TYPE_VPHYSICS);
-    } else {
-        Entity_AddEffect(effects, EFFECT_FLAG_NO_DRAW);
-        Entity_SetSolidType(entity, SOLID_TYPE_NONE);
-    }
-
-    Entity_SetEffects(entity, effects);
-}
-
-static void Entity_AddEffect(int& effects, int flag) {
-    effects |= flag;
-}
-
-static void Entity_RemoveEffect(int& effects, int flag) {
-    effects &= ~flag;
-}
-
-static int Entity_GetEffects(int entity) {
-    return GetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS);
-}
-
-static void Entity_SetEffects(int entity, int effects) {
-    SetEntProp(entity, Prop_Send, ENT_PROP_EFFECTS, effects);
-}
-
-static void Entity_SetSolidType(int entity, int solidType) {
-    SetEntProp(entity, Prop_Send, ENT_PROP_SOLID_TYPE, solidType);
-}
-
 int Entity_Trace(int client) {
-    float eyesPosition[3];
-    float eyesAngles[3];
+    float origin[3];
+    float angles[3];
 
-    GetClientEyePosition(client, eyesPosition);
-    GetClientEyeAngles(client, eyesAngles);
+    GetClientEyePosition(client, origin);
+    GetClientEyeAngles(client, angles);
+    TR_TraceRayFilter(origin, angles, MASK_SHOT, RayType_Infinite, IgnoreClients);
 
-    Handle trace = TR_TraceRayFilterEx(eyesPosition, eyesAngles, MASK_SHOT, RayType_Infinite, TraceEntityFilter_Players);
-    int entity = TR_GetEntityIndex(trace);
-
-    CloseHandle(trace);
-
-    return entity;
+    return TR_GetEntityIndex();
 }
 
-static bool TraceEntityFilter_Players(int entity, int contentsMask) {
+static bool IgnoreClients(int entity, int contentsMask) {
     return entity > MaxClients;
 }
 
-void Entity_GetPosition(int entity, float position[3]) {
-    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_ORIGIN, position);
+void Entity_Freeze_Toggle(int entity, bool enabled) {
+    AcceptEntityInput(entity, enabled ? "DisableMotion" : "EnableMotion");
+    SdkHook_OnTakeDamage_Toggle(entity, enabled);
 }
 
-void Entity_GetMinBounds(int entity, float minBounds[3]) {
-    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MINS, minBounds);
+void Entity_Delete_Toggle(int entity, bool enabled) {
+    int effects = GetEffects(entity);
+
+    AddEffect(effects, EFFECT_FLAG_NO_DRAW);
+
+    if (enabled) {
+        AddEffect(effects, EFFECT_FLAG_NO_DRAW);
+    } else {
+        RemoveEffect(effects, EFFECT_FLAG_NO_DRAW);
+    }
+
+    SetEffects(entity, effects);
+    Entity_Freeze_Toggle(entity, enabled);
+    SetSolidType(entity, enabled ? SOLID_TYPE_NONE : SOLID_TYPE_VPHYSICS);
 }
 
-void Entity_GetMaxBounds(int entity, float maxBounds[3]) {
-    GetEntPropVector(entity, Prop_Send, ENT_PROP_VEC_MAXS, maxBounds);
+static void SetSolidType(int entity, int solidType) {
+    SetEntProp(entity, Prop_Send, ENTITY_PROPERTY_SOLID_TYPE, solidType);
+}
+
+static int GetEffects(int entity) {
+    return GetEntProp(entity, Prop_Send, ENTITY_PROPERTY_EFFECTS);
+}
+
+static void SetEffects(int entity, int effects) {
+    SetEntProp(entity, Prop_Send, ENTITY_PROPERTY_EFFECTS, effects);
+}
+
+static void AddEffect(int& effects, int flag) {
+    effects |= flag;
+}
+
+static void RemoveEffect(int& effects, int flag) {
+    effects &= ~flag;
+}
+
+int Entity_GetHammerId(int entity) {
+    return GetEntProp(entity, Prop_Data, ENTITY_PROPERTY_HAMMER_ID);
+}
+
+void Entity_GetOrigin(int entity, float origin[3]) {
+    GetEntPropVector(entity, Prop_Send, ENTITY_PROPERTY_VEC_ORIGIN, origin);
 }
 
 void Entity_GetAngles(int entity, float angles[3]) {
-    GetEntPropVector(entity, Prop_Send, ENT_PROP_ANG_ROTATION, angles);
+    GetEntPropVector(entity, Prop_Send, ENTITY_PROPERTY_ANG_ROTATION, angles);
 }
 
-bool Entity_IsPropPhysics(int entity) {
-    char className[ENTITY_CLASS_NAME_SIZE];
+void Entity_GetMins(int entity, float mins[3]) {
+    GetEntPropVector(entity, Prop_Send, ENTITY_PROPERTY_VEC_MINS, mins);
+}
 
-    GetEntityClassname(entity, className, sizeof(className));
-
-    bool isPropPhysics = strcmp(className, PROP_PHYSICS) == 0;
-    bool isPropPhysicsMultiplayer = strcmp(className, PROP_PHYSICS_MULTIPLAYER) == 0;
-
-    return isPropPhysics || isPropPhysicsMultiplayer;
+void Entity_GetMaxs(int entity, float maxs[3]) {
+    GetEntPropVector(entity, Prop_Send, ENTITY_PROPERTY_VEC_MAXS, maxs);
 }
